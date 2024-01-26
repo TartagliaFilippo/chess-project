@@ -1,0 +1,97 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+.board {
+  min-width: 40%;
+  aspect-ratio: 1;
+  padding: 1rem;
+  border: 2px solid #000;
+  position: relative;
+}
+
+.coordinate {
+  position: absolute;
+}
+
+.coordinates-top {
+  width: calc(100% - 2rem);
+  top: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  rotate: 180deg;
+}
+
+.coordinates-bottom {
+  width: calc(100% - 2rem);
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.coordinates-left {
+  height: calc(100% - 2rem);
+  left: 0.25rem;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+}
+
+.coordinates-right {
+  height: calc(100% - 2rem);
+  right: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  rotate: 180deg;
+}
+
+.play-ground {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 3px solid #000000;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(8, 1fr);
+  overflow: auto;
+}
+
+.row {
+  display: flex;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+}
+
+.row:nth-child(odd) .box:nth-child(odd) {
+  background-color: #f5f5dc;
+}
+
+.row:nth-child(odd) .box:nth-child(even) {
+  background-color: #63390e;
+}
+
+.row:nth-child(even) .box:nth-child(even) {
+  background-color: #f5f5dc;
+}
+
+.row:nth-child(even) .box:nth-child(odd) {
+  background-color: #63390e;
+}
