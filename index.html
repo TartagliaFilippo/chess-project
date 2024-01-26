@@ -10,6 +10,7 @@
     />
     <title>Chess</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="pieces.js" defer></script>
     <script src="main.js" defer></script>
   </head>
   <body>
@@ -20,6 +21,7 @@
       </header>
       <main>
         <div class="board">
+          <!-- coordinate -->
           <div class="coordinate coordinates-top">
             <div class="letter">A</div>
             <div class="letter">B</div>
@@ -60,26 +62,27 @@
             <div class="number">7</div>
             <div class="number">8</div>
           </div>
+          <!-- tavolo di gioco -->
           <div class="play-ground">
             <div class="row row-1">
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
+              <div class="box black-rook"></div>
+              <div class="box black-knight"></div>
+              <div class="box black-bishop"></div>
+              <div class="box black-queen"></div>
+              <div class="box black-king"></div>
+              <div class="box black-bishop"></div>
+              <div class="box black-knight"></div>
+              <div class="box black-rook"></div>
             </div>
             <div class="row row-2">
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
+              <div class="box black-pawn"></div>
+              <div class="box black-pawn"></div>
+              <div class="box black-pawn"></div>
+              <div class="box black-pawn"></div>
+              <div class="box black-pawn"></div>
+              <div class="box black-pawn"></div>
+              <div class="box black-pawn"></div>
+              <div class="box black-pawn"></div>
             </div>
             <div class="row row-3">
               <div class="box"></div>
@@ -122,24 +125,24 @@
               <div class="box"></div>
             </div>
             <div class="row row-7">
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
+              <div class="box white-pawn"></div>
+              <div class="box white-pawn"></div>
+              <div class="box white-pawn"></div>
+              <div class="box white-pawn"></div>
+              <div class="box white-pawn"></div>
+              <div class="box white-pawn"></div>
+              <div class="box white-pawn"></div>
+              <div class="box white-pawn"></div>
             </div>
             <div class="row row-8">
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
-              <div class="box"></div>
+              <div class="box white-rook"></div>
+              <div class="box white-knight"></div>
+              <div class="box white-bishop"></div>
+              <div class="box white-queen"></div>
+              <div class="box white-king"></div>
+              <div class="box white-bishop"></div>
+              <div class="box white-knight"></div>
+              <div class="box white-rook"></div>
             </div>
           </div>
         </div>
