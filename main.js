@@ -18,28 +18,49 @@ document.querySelectorAll(".box").forEach(function (cell) {
     } else {
       // gestisco il clic sulla casella di destinazione solo se un pezzo è stato selezionato
       const destinationCell = clickedCell;
+
+      // MUOVO il pezzo
       movePiece(selectedPiece, destinationCell);
       selectedPiece.style.backgroundColor = "";
       selectedPiece = null;
-      currentPlayer = currentPlayer === "white" ? "black" : "white";
-      document.getElementById("turn").innerHTML = currentPlayer;
     }
   });
 });
 
-// funzione che permette ai pezzi di muoversi
+// funzione per MUOVERE I PEZZI
 function movePiece(pieceElement, destinationCell) {
+  const startPosition = pieceElement.parentElement;
   const hasPiece = destinationCell.firstElementChild;
+  const pieceId = pieceElement.id;
+  let pieceType;
+  let removePieceType;
 
-  // rimozione del pezzo se nella casella di destinazione c'è un elemento
+  // CATTURA del pezzo se nella casella di destinazione c'è un elemento
   if (hasPiece) {
-    hasPiece.parentNode.removeChild(hasPiece);
-  }
+    const removePieceId = hasPiece.id;
 
+    pieceId.includes("white") ? (pieceType = "white") : (pieceType = "black");
+    removePieceId.includes("white")
+      ? (removePieceType = "white")
+      : (removePieceType = "black");
+
+    if (pieceType !== removePieceType) {
+      hasPiece.parentNode.removeChild(hasPiece);
+    } else {
+      return;
+    }
+  }
+  // muovo il pezzo nella casella di destinazione
   destinationCell.appendChild(pieceElement);
+
+  // controllo per il CAMBIO TURNO
+  if (startPosition !== destinationCell) {
+    currentPlayer = currentPlayer === "white" ? "black" : "white";
+    document.getElementById("turn").innerHTML = currentPlayer;
+  }
 }
 
-// funzione che controlla il colore del pezzo
+// funzione che controlla il COLORE DEL PEZZO
 function getPieceColor(pieceElement) {
   if (!pieceElement) return null;
 
