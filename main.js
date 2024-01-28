@@ -7,7 +7,7 @@ document.querySelectorAll(".box").forEach(function (cell) {
     const clickedCell = event.currentTarget;
 
     if (!selectedPiece) {
-      // Seleziona il pezzo cliccato
+      // seleziona il pezzo cliccato
       selectedPiece = clickedCell.firstElementChild;
       const pieceColor = getPieceColor(clickedCell.firstElementChild);
       if (pieceColor === currentPlayer) {
@@ -16,7 +16,7 @@ document.querySelectorAll(".box").forEach(function (cell) {
         selectedPiece = null;
       }
     } else {
-      // Gestisci il clic sulla casella di destinazione solo se un pezzo è stato selezionato
+      // gestisco il clic sulla casella di destinazione solo se un pezzo è stato selezionato
       const destinationCell = clickedCell;
       movePiece(selectedPiece, destinationCell);
       selectedPiece.style.backgroundColor = "";
@@ -29,6 +29,13 @@ document.querySelectorAll(".box").forEach(function (cell) {
 
 // funzione che permette ai pezzi di muoversi
 function movePiece(pieceElement, destinationCell) {
+  const hasPiece = destinationCell.firstElementChild;
+
+  // rimozione del pezzo se nella casella di destinazione c'è un elemento
+  if (hasPiece) {
+    hasPiece.parentNode.removeChild(hasPiece);
+  }
+
   destinationCell.appendChild(pieceElement);
 }
 
