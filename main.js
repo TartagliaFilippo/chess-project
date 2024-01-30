@@ -103,6 +103,8 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
   let checkDestionationRow = parseInt(startCell.dataset.row);
+  let checkDestinationRowElement = destinationCell.firstElementChild; // controllo se c'è un pezzo di fronte
+  let isDestinationOccupied = !!checkDestinationRowElement;
 
   if (startCellColumn === destinationCellColumn) {
     if (pieceColor === "white") {
@@ -110,12 +112,20 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
         if (startCellRow === 2) {
           checkDestionationRow += 2;
           if (destinationCellRow <= checkDestionationRow) {
-            movePiece(selectedPiece, destinationCell);
+            if (isDestinationOccupied === true) {
+              return;
+            } else {
+              movePiece(selectedPiece, destinationCell);
+            }
           }
         } else if (startCellRow > 2) {
           checkDestionationRow++;
           if (destinationCellRow === checkDestionationRow) {
-            movePiece(selectedPiece, destinationCell);
+            if (isDestinationOccupied === true) {
+              return;
+            } else {
+              movePiece(selectedPiece, destinationCell);
+            }
           } else {
             return;
           }
@@ -128,12 +138,20 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
         if (startCellRow === 7) {
           checkDestionationRow -= 2;
           if (destinationCellRow >= checkDestionationRow) {
-            movePiece(selectedPiece, destinationCell);
+            if (isDestinationOccupied === true) {
+              return;
+            } else {
+              movePiece(selectedPiece, destinationCell);
+            }
           }
         } else if (startCellRow < 7) {
           checkDestionationRow--;
           if (destinationCellRow === checkDestionationRow) {
-            movePiece(selectedPiece, destinationCell);
+            if (isDestinationOccupied === true) {
+              return;
+            } else {
+              movePiece(selectedPiece, destinationCell);
+            }
           }
         } else {
           return;
