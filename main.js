@@ -31,8 +31,11 @@ document.querySelectorAll(".box").forEach(function (cell) {
       const destinationCell = clickedCell;
 
       // MUOVO il pezzo
-
-      pawnMove(selectedPiece, startCell, destinationCell);
+      if (pieceType === "pawn") {
+        pawnMove(selectedPiece, startCell, destinationCell);
+      } else if (pieceType === "rook") {
+        rookMove(selectedPiece, startCell, destinationCell);
+      }
 
       selectedPiece.style.backgroundColor = "";
       selectedPiece = null;
@@ -119,16 +122,38 @@ function getCoordinateLetter(cell) {
   return letterToNumber;
 }
 
+function getLetterFromCoordinate(number) {
+  let numberToLetter = null;
+
+  if (number === 10) {
+    numberToLetter = "a";
+  } else if (number === 11) {
+    numberToLetter = "b";
+  } else if (number === 12) {
+    numberToLetter = "c";
+  } else if (number === 13) {
+    numberToLetter = "d";
+  } else if (number === 14) {
+    numberToLetter = "e";
+  } else if (number === 15) {
+    numberToLetter = "f";
+  } else if (number === 16) {
+    numberToLetter = "g";
+  } else if (number === 17) {
+    numberToLetter = "h";
+  }
+  return numberToLetter;
+}
+
 function pawnMove(selectedPiece, startCell, destinationCell) {
   const pieceColor = selectedPiece.id.includes("white") ? "white" : "black";
-  const pieceType = getPieceType(selectedPiece);
   const startCellRow = parseInt(startCell.dataset.row);
   const startCellColumn = startCell.dataset.letter;
   let startCellColumnToNumber = getCoordinateLetter(startCell);
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
   let checkDestionationRow = parseInt(startCell.dataset.row);
-  let checkDestinationRowElement = destinationCell.firstElementChild; // controllo se c'è un pezzo di fronte
+  let checkDestinationRowElement = destinationCell.firstElementChild; // controllo se c'è un pezzo
   let isDestinationOccupied = !!checkDestinationRowElement;
 
   if (startCellColumn === destinationCellColumn) {
@@ -212,4 +237,101 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   } else {
     return;
   }
+}
+
+function rookMove(selectedPiece, startCell, destinationCell) {
+  const pieceColor = selectedPiece.id.includes("white") ? "white" : "black";
+  const startCellRow = parseInt(startCell.dataset.row);
+  const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCell);
+  const destinationCellRow = parseInt(destinationCell.dataset.row);
+  const destinationCellColumn = destinationCell.dataset.letter;
+  let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
+  let countCell;
+  let isCellOccupied;
+  let listCell = [];
+
+  if (startCellColumn === destinationCellColumn) {
+    //controllo le colonne
+    const step = startCellRow < destinationCellRow ? "up" : "down";
+    countCell = Math.abs(startCellRow - destinationCellRow);
+    if (step === "up") {
+      for (let i = 1; i < countCell; i++) {
+        let checkPiece = document.querySelector(
+          `.box[data-letter="${startCellColumn}"][data-row="${
+            startCellRow + i
+          }"]`
+        );
+        isCellOccupied = !!checkPiece.firstChild;
+        listCell.push(isCellOccupied);
+      }
+      if (listCell.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else if (step === "down") {
+      for (let i = 1; i < countCell; i++) {
+        let checkPiece = document.querySelector(
+          `.box[data-letter="${startCellColumn}"][data-row="${
+            startCellRow - i
+          }"]`
+        );
+        isCellOccupied = !!checkPiece.firstChild;
+        listCell.push(isCellOccupied);
+      }
+      if (listCell.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else {
+      return;
+    }
+  } else if (startCellRow === destinationCellRow) {
+    //controllo le righe
+    const step =
+      startCellColumnToNumber < destinationCellColumnToNumber
+        ? "right"
+        : "left";
+    countCell = Math.abs(
+      startCellColumnToNumber - destinationCellColumnToNumber
+    );
+    if (step === "right") {
+      for (let i = 1; i < countCell; i++) {
+        let checkPiece = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + i
+          )}"][data-row="${startCellRow}"]`
+        );
+        isCellOccupied = !!checkPiece.firstChild;
+        listCell.push(isCellOccupied);
+      }
+      if (listCell.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else if (step === "left") {
+      for (let i = 1; i < countCell; i++) {
+        let checkPiece = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - i
+          )}"][data-row="${startCellRow}"]`
+        );
+        isCellOccupied = !!checkPiece.firstChild;
+        listCell.push(isCellOccupied);
+      }
+      if (listCell.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else {
+      return;
+    }
+  } else {
+    return;
+  }
+  console.log(listCell);
 }
