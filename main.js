@@ -2,6 +2,7 @@ let pieceType = null;
 let pieceColor = null;
 let selectedPiece = null;
 let startCell = null;
+let letterToNumber = null;
 let currentPlayer = "white";
 document.getElementById("turn").innerHTML = currentPlayer;
 
@@ -93,6 +94,29 @@ function getPieceType(selectedPiece) {
     pieceType = "king";
   }
   return pieceType;
+}
+
+function getCoordinateLetter(cell) {
+  const letter = cell.dataset.letter;
+
+  if (letter === "a") {
+    letterToNumber = 10;
+  } else if (letter === "b") {
+    letterToNumber = 11;
+  } else if (letter === "c") {
+    letterToNumber = 12;
+  } else if (letter === "d") {
+    letterToNumber = 13;
+  } else if (letter === "e") {
+    letterToNumber = 14;
+  } else if (letter === "f") {
+    letterToNumber = 15;
+  } else if (letter === "g") {
+    letterToNumber = 16;
+  } else if (letter === "h") {
+    letterToNumber = 17;
+  }
+  return letterToNumber;
 }
 
 function pawnMove(selectedPiece, startCell, destinationCell) {
