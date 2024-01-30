@@ -40,7 +40,7 @@ document.querySelectorAll(".box").forEach(function (cell) {
   });
 });
 
-// funzione per MUOVERE I PEZZI
+// funzione per MUOVERE I PEZZI e gestire la CATTURA
 function movePiece(pieceElement, destinationCell) {
   // posizione di partenza del pezzo
   const startPosition = pieceElement.parentElement;
@@ -124,6 +124,7 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   const pieceType = getPieceType(selectedPiece);
   const startCellRow = parseInt(startCell.dataset.row);
   const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCell);
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
   let checkDestionationRow = parseInt(startCell.dataset.row);
@@ -131,6 +132,7 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   let isDestinationOccupied = !!checkDestinationRowElement;
 
   if (startCellColumn === destinationCellColumn) {
+    //movimento pedoni
     if (pieceColor === "white") {
       if (destinationCellRow > startCellRow) {
         if (startCellRow === 2) {
@@ -182,6 +184,27 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
         }
       } else {
         return;
+      }
+    } else {
+      return;
+    }
+    //cattura pedoni
+  } else if (startCellColumnToNumber++ || startCellColumnToNumber--) {
+    if (pieceColor === "white") {
+      if (destinationCellRow > startCellRow) {
+        if (isDestinationOccupied === true) {
+          movePiece(selectedPiece, destinationCell);
+        } else {
+          return;
+        }
+      }
+    } else if (pieceColor == "black") {
+      if (destinationCellRow < startCellRow) {
+        if (isDestinationOccupied === true) {
+          movePiece(selectedPiece, destinationCell);
+        } else {
+          return;
+        }
       }
     } else {
       return;
