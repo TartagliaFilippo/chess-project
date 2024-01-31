@@ -39,6 +39,8 @@ document.querySelectorAll(".box").forEach(function (cell) {
         bishopMove(selectedPiece, startCell, destinationCell);
       } else if (pieceType === "knight") {
         knightMove(selectedPiece, startCell, destinationCell);
+      } else if (pieceType === "queen") {
+        queenMove(selectedPiece, startCell, destinationCell);
       }
 
       selectedPiece.style.backgroundColor = "";
@@ -346,7 +348,10 @@ function bishopMove(selectedPiece, startCell, destinationCell) {
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
   let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
-  let countCell = Math.abs(startCellRow - destinationCellRow);
+  let countCellY = Math.abs(startCellRow - destinationCellRow);
+  let countCellX = Math.abs(
+    startCellColumnToNumber - destinationCellColumnToNumber
+  );
   const stepDirectionY = startCellRow > destinationCellRow ? "down" : "up";
   const stepDirectionX =
     startCellColumnToNumber > destinationCellColumnToNumber ? "left" : "right";
@@ -355,64 +360,80 @@ function bishopMove(selectedPiece, startCell, destinationCell) {
   let listOccupied = [];
 
   if (stepDirectionY === "down" && stepDirectionX === "left") {
-    for (let i = 1; i < countCell; i++) {
-      checkCell = document.querySelector(
-        `.box[data-letter="${getLetterFromCoordinate(
-          startCellColumnToNumber - i
-        )}"][data-row="${startCellRow - i}"]`
-      );
-      isCellOccupied = !!checkCell.firstChild;
-      listOccupied.push(isCellOccupied);
-    }
-    if (listOccupied.includes(true)) {
-      return;
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - i
+          )}"][data-row="${startCellRow - i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
     } else {
-      movePiece(selectedPiece, destinationCell);
+      return;
     }
   } else if (stepDirectionY === "down" && stepDirectionX === "right") {
-    for (let i = 1; i < countCell; i++) {
-      checkCell = document.querySelector(
-        `.box[data-letter="${getLetterFromCoordinate(
-          startCellColumnToNumber + i
-        )}"][data-row="${startCellRow - i}"]`
-      );
-      isCellOccupied = !!checkCell.firstChild;
-      listOccupied.push(isCellOccupied);
-    }
-    if (listOccupied.includes(true)) {
-      return;
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + i
+          )}"][data-row="${startCellRow - i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
     } else {
-      movePiece(selectedPiece, destinationCell);
+      return;
     }
   } else if (stepDirectionY === "up" && stepDirectionX === "left") {
-    for (let i = 1; i < countCell; i++) {
-      checkCell = document.querySelector(
-        `.box[data-letter="${getLetterFromCoordinate(
-          startCellColumnToNumber - i
-        )}"][data-row="${startCellRow + i}"]`
-      );
-      isCellOccupied = !!checkCell.firstChild;
-      listOccupied.push(isCellOccupied);
-    }
-    if (listOccupied.includes(true)) {
-      return;
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - i
+          )}"][data-row="${startCellRow + i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
     } else {
-      movePiece(selectedPiece, destinationCell);
+      return;
     }
   } else if (stepDirectionY === "up" && stepDirectionX === "right") {
-    for (let i = 1; i < countCell; i++) {
-      checkCell = document.querySelector(
-        `.box[data-letter="${getLetterFromCoordinate(
-          startCellColumnToNumber + i
-        )}"][data-row="${startCellRow + i}"]`
-      );
-      isCellOccupied = !!checkCell.firstChild;
-      listOccupied.push(isCellOccupied);
-    }
-    if (listOccupied.includes(true)) {
-      return;
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + i
+          )}"][data-row="${startCellRow + i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
     } else {
-      movePiece(selectedPiece, destinationCell);
+      return;
     }
   } else {
     return;
@@ -498,6 +519,182 @@ function knightMove(selectedPiece, startCell, destinationCell) {
     listCheck.push(destinatonCellA, destinatonCellB);
     if (listCheck.includes(destinationCell)) {
       movePiece(selectedPiece, destinationCell);
+    } else {
+      return;
+    }
+  } else {
+    return;
+  }
+}
+
+function queenMove(selectedPiece, startCell, destinationCell) {
+  const startCellRow = parseInt(startCell.dataset.row);
+  const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCell);
+  const destinationCellRow = parseInt(destinationCell.dataset.row);
+  const destinationCellColumn = destinationCell.dataset.letter;
+  let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
+  let countCellY = Math.abs(startCellRow - destinationCellRow);
+  let countCellX = Math.abs(
+    startCellColumnToNumber - destinationCellColumnToNumber
+  );
+  const stepDirectionY = startCellRow > destinationCellRow ? "down" : "up";
+  const stepDirectionX =
+    startCellColumnToNumber > destinationCellColumnToNumber ? "left" : "right";
+  let checkCell;
+  let isCellOccupied;
+  let listOccupied = [];
+
+  //direzionalità
+  if (startCellRow === destinationCellRow) {
+    //orizzontale
+    if (stepDirectionX === "left") {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - i
+          )}"][data-row="${startCellRow}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+        console.log("i:", i);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else if (stepDirectionX === "right") {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + i
+          )}"][data-row="${startCellRow}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+        console.log("i:", i);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else {
+      return;
+    }
+  } else if (startCellColumnToNumber === destinationCellColumnToNumber) {
+    //verticale
+    if (stepDirectionY === "up") {
+      for (let i = 1; i < countCellY; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${startCellColumn}"][data-row="${
+            startCellRow + i
+          }"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else if (stepDirectionY === "down") {
+      for (let i = 1; i < countCellY; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${startCellColumn}"][data-row="${
+            startCellRow - i
+          }"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else {
+      return;
+    }
+  } else if (stepDirectionY === "up" && stepDirectionX === "left") {
+    //obliquo alto sinistra
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - i
+          )}"][data-row="${startCellRow + i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else {
+      return;
+    }
+  } else if (stepDirectionY === "up" && stepDirectionX === "right") {
+    //obliquo alto destra
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + i
+          )}"][data-row="${startCellRow + i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else {
+      return;
+    }
+  } else if (stepDirectionY === "down" && stepDirectionX === "right") {
+    //obliquo basso destra
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + i
+          )}"][data-row="${startCellRow - i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
+    } else {
+      return;
+    }
+  } else if (stepDirectionY === "down" && stepDirectionX === "left") {
+    //obliquo basso sinistra
+    if (countCellX === countCellY) {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - i
+          )}"][data-row="${startCellRow - i}"]`
+        );
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
+      }
+      if (listOccupied.includes(true)) {
+        return;
+      } else {
+        movePiece(selectedPiece, destinationCell);
+      }
     } else {
       return;
     }
