@@ -37,6 +37,8 @@ document.querySelectorAll(".box").forEach(function (cell) {
         rookMove(selectedPiece, startCell, destinationCell);
       } else if (pieceType === "bishop") {
         bishopMove(selectedPiece, startCell, destinationCell);
+      } else if (pieceType === "knight") {
+        knightMove(selectedPiece, startCell, destinationCell);
       }
 
       selectedPiece.style.backgroundColor = "";
@@ -345,15 +347,14 @@ function bishopMove(selectedPiece, startCell, destinationCell) {
   const destinationCellColumn = destinationCell.dataset.letter;
   let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
   let countCell = Math.abs(startCellRow - destinationCellRow);
-  const stepFirstDirection = startCellRow > destinationCellRow ? "down" : "up";
-  const stepSecondDirection =
+  const stepDirectionY = startCellRow > destinationCellRow ? "down" : "up";
+  const stepDirectionX =
     startCellColumnToNumber > destinationCellColumnToNumber ? "left" : "right";
   let checkCell;
-  let listCheckCell = [];
   let isCellOccupied;
   let listOccupied = [];
 
-  if (stepFirstDirection === "down" && stepSecondDirection === "left") {
+  if (stepDirectionY === "down" && stepDirectionX === "left") {
     for (let i = 1; i < countCell; i++) {
       checkCell = document.querySelector(
         `.box[data-letter="${getLetterFromCoordinate(
@@ -368,7 +369,7 @@ function bishopMove(selectedPiece, startCell, destinationCell) {
     } else {
       movePiece(selectedPiece, destinationCell);
     }
-  } else if (stepFirstDirection === "down" && stepSecondDirection === "right") {
+  } else if (stepDirectionY === "down" && stepDirectionX === "right") {
     for (let i = 1; i < countCell; i++) {
       checkCell = document.querySelector(
         `.box[data-letter="${getLetterFromCoordinate(
@@ -383,7 +384,7 @@ function bishopMove(selectedPiece, startCell, destinationCell) {
     } else {
       movePiece(selectedPiece, destinationCell);
     }
-  } else if (stepFirstDirection === "up" && stepSecondDirection === "left") {
+  } else if (stepDirectionY === "up" && stepDirectionX === "left") {
     for (let i = 1; i < countCell; i++) {
       checkCell = document.querySelector(
         `.box[data-letter="${getLetterFromCoordinate(
@@ -398,7 +399,7 @@ function bishopMove(selectedPiece, startCell, destinationCell) {
     } else {
       movePiece(selectedPiece, destinationCell);
     }
-  } else if (stepFirstDirection === "up" && stepSecondDirection === "right") {
+  } else if (stepDirectionY === "up" && stepDirectionX === "right") {
     for (let i = 1; i < countCell; i++) {
       checkCell = document.querySelector(
         `.box[data-letter="${getLetterFromCoordinate(
@@ -412,6 +413,93 @@ function bishopMove(selectedPiece, startCell, destinationCell) {
       return;
     } else {
       movePiece(selectedPiece, destinationCell);
+    }
+  } else {
+    return;
+  }
+}
+
+function knightMove(selectedPiece, startCell, destinationCell) {
+  const startCellRow = parseInt(startCell.dataset.row);
+  const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCell);
+  const destinationCellRow = parseInt(destinationCell.dataset.row);
+  const destinationCellColumn = destinationCell.dataset.letter;
+  let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
+  const stepDirectionY = startCellRow > destinationCellRow ? "down" : "up";
+  const stepDirectionX =
+    startCellColumnToNumber > destinationCellColumnToNumber ? "left" : "right";
+  let destinatonCellA;
+  let destinatonCellB;
+  let listCheck = [];
+
+  if (stepDirectionY === "down" && stepDirectionX === "left") {
+    destinatonCellA = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber - 1
+      )}"][data-row="${startCellRow - 2}"]`
+    );
+    destinatonCellB = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber - 2
+      )}"][data-row="${startCellRow - 1}"]`
+    );
+    listCheck.push(destinatonCellA, destinatonCellB);
+    if (listCheck.includes(destinationCell)) {
+      movePiece(selectedPiece, destinationCell);
+    } else {
+      return;
+    }
+  } else if (stepDirectionY === "up" && stepDirectionX === "left") {
+    destinatonCellA = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber - 1
+      )}"][data-row="${startCellRow + 2}"]`
+    );
+    destinatonCellB = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber - 2
+      )}"][data-row="${startCellRow + 1}"]`
+    );
+    listCheck.push(destinatonCellA, destinatonCellB);
+    if (listCheck.includes(destinationCell)) {
+      movePiece(selectedPiece, destinationCell);
+    } else {
+      return;
+    }
+  } else if (stepDirectionY === "up" && stepDirectionX === "right") {
+    destinatonCellA = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber + 1
+      )}"][data-row="${startCellRow + 2}"]`
+    );
+    destinatonCellB = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber + 2
+      )}"][data-row="${startCellRow + 1}"]`
+    );
+    listCheck.push(destinatonCellA, destinatonCellB);
+    if (listCheck.includes(destinationCell)) {
+      movePiece(selectedPiece, destinationCell);
+    } else {
+      return;
+    }
+  } else if (stepDirectionY === "down" && stepDirectionX === "right") {
+    destinatonCellA = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber + 1
+      )}"][data-row="${startCellRow - 2}"]`
+    );
+    destinatonCellB = document.querySelector(
+      `.box[data-letter="${getLetterFromCoordinate(
+        startCellColumnToNumber + 2
+      )}"][data-row="${startCellRow - 1}"]`
+    );
+    listCheck.push(destinatonCellA, destinatonCellB);
+    if (listCheck.includes(destinationCell)) {
+      movePiece(selectedPiece, destinationCell);
+    } else {
+      return;
     }
   } else {
     return;
