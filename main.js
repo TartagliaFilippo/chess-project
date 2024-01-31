@@ -35,6 +35,8 @@ document.querySelectorAll(".box").forEach(function (cell) {
         pawnMove(selectedPiece, startCell, destinationCell);
       } else if (pieceType === "rook") {
         rookMove(selectedPiece, startCell, destinationCell);
+      } else if (pieceType === "bishop") {
+        bishopMove(selectedPiece, startCell, destinationCell);
       }
 
       selectedPiece.style.backgroundColor = "";
@@ -333,5 +335,85 @@ function rookMove(selectedPiece, startCell, destinationCell) {
   } else {
     return;
   }
-  console.log(listCell);
+}
+
+function bishopMove(selectedPiece, startCell, destinationCell) {
+  const startCellRow = parseInt(startCell.dataset.row);
+  const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCell);
+  const destinationCellRow = parseInt(destinationCell.dataset.row);
+  const destinationCellColumn = destinationCell.dataset.letter;
+  let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
+  let countCell = Math.abs(startCellRow - destinationCellRow);
+  const stepFirstDirection = startCellRow > destinationCellRow ? "down" : "up";
+  const stepSecondDirection =
+    startCellColumnToNumber > destinationCellColumnToNumber ? "left" : "right";
+  let checkCell;
+  let listCheckCell = [];
+  let isCellOccupied;
+  let listOccupied = [];
+
+  if (stepFirstDirection === "down" && stepSecondDirection === "left") {
+    for (let i = 1; i < countCell; i++) {
+      checkCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber - i
+        )}"][data-row="${startCellRow - i}"]`
+      );
+      isCellOccupied = !!checkCell.firstChild;
+      listOccupied.push(isCellOccupied);
+    }
+    if (listOccupied.includes(true)) {
+      return;
+    } else {
+      movePiece(selectedPiece, destinationCell);
+    }
+  } else if (stepFirstDirection === "down" && stepSecondDirection === "right") {
+    for (let i = 1; i < countCell; i++) {
+      checkCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber + i
+        )}"][data-row="${startCellRow - i}"]`
+      );
+      isCellOccupied = !!checkCell.firstChild;
+      listOccupied.push(isCellOccupied);
+    }
+    if (listOccupied.includes(true)) {
+      return;
+    } else {
+      movePiece(selectedPiece, destinationCell);
+    }
+  } else if (stepFirstDirection === "up" && stepSecondDirection === "left") {
+    for (let i = 1; i < countCell; i++) {
+      checkCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber - i
+        )}"][data-row="${startCellRow + i}"]`
+      );
+      isCellOccupied = !!checkCell.firstChild;
+      listOccupied.push(isCellOccupied);
+    }
+    if (listOccupied.includes(true)) {
+      return;
+    } else {
+      movePiece(selectedPiece, destinationCell);
+    }
+  } else if (stepFirstDirection === "up" && stepSecondDirection === "right") {
+    for (let i = 1; i < countCell; i++) {
+      checkCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber + i
+        )}"][data-row="${startCellRow + i}"]`
+      );
+      isCellOccupied = !!checkCell.firstChild;
+      listOccupied.push(isCellOccupied);
+    }
+    if (listOccupied.includes(true)) {
+      return;
+    } else {
+      movePiece(selectedPiece, destinationCell);
+    }
+  } else {
+    return;
+  }
 }
