@@ -11,7 +11,6 @@ document.querySelectorAll(".box").forEach(function (cell) {
     const clickedCell = event.currentTarget;
     const clickedRow = event.currentTarget.dataset.row;
     const clickedColumn = event.currentTarget.dataset.letter;
-    console.log(clickedColumn, clickedRow);
 
     if (!selectedPiece) {
       // seleziona il pezzo cliccato
@@ -29,6 +28,7 @@ document.querySelectorAll(".box").forEach(function (cell) {
     } else {
       // gestisco il clic sulla casella di destinazione solo se un pezzo è stato selezionato
       const destinationCell = clickedCell;
+      console.log(clickedColumn, clickedRow);
 
       // MUOVO il pezzo
       if (pieceType === "pawn") {
@@ -81,15 +81,17 @@ function movePiece(pieceElement, destinationCell) {
 }
 
 // funzione che controlla il COLORE DEL PEZZO
-function getPieceColor(pieceElement) {
-  if (!pieceElement) return null;
+function getPieceColor(selectedPiece) {
+  if (!selectedPiece) return null;
 
-  const pieceId = pieceElement.id;
+  const pieceId = selectedPiece.id;
   return pieceId.includes("white") ? "white" : "black";
 }
 
 // funzione che IDENTIFICA IL PEZZO selezionato
 function getPieceType(selectedPiece) {
+  if (!selectedPiece) return null;
+
   const selectedPieceId = selectedPiece.id;
   if (selectedPieceId.includes("pawn")) {
     pieceType = "pawn";
@@ -161,8 +163,8 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
   let checkDestionationRow = parseInt(startCell.dataset.row);
-  let checkDestinationRowElement = destinationCell.firstElementChild; // controllo se c'è un pezzo
-  let isDestinationOccupied = !!checkDestinationRowElement;
+  let checkCellElement = destinationCell.firstElementChild; // controllo se c'è un pezzo
+  let isDestinationOccupied = !!checkCellElement;
 
   if (startCellColumn === destinationCellColumn) {
     //movimento pedoni
@@ -248,47 +250,51 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
 }
 
 function rookMove(selectedPiece, startCell, destinationCell) {
-  const pieceColor = selectedPiece.id.includes("white") ? "white" : "black";
   const startCellRow = parseInt(startCell.dataset.row);
   const startCellColumn = startCell.dataset.letter;
   let startCellColumnToNumber = getCoordinateLetter(startCell);
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
   let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
-  let countCell;
+  let countCellY = Math.abs(startCellRow - destinationCellRow);
+  let countCellX = Math.abs(
+    startCellColumnToNumber - destinationCellColumnToNumber
+  );
+  const stepDirectionY = startCellRow > destinationCellRow ? "down" : "up";
+  const stepDirectionX =
+    startCellColumnToNumber > destinationCellColumnToNumber ? "left" : "right";
+  let checkCell;
   let isCellOccupied;
-  let listCell = [];
+  let listOccupied = [];
 
   if (startCellColumn === destinationCellColumn) {
     //controllo le colonne
-    const step = startCellRow < destinationCellRow ? "up" : "down";
-    countCell = Math.abs(startCellRow - destinationCellRow);
-    if (step === "up") {
-      for (let i = 1; i < countCell; i++) {
-        let checkPiece = document.querySelector(
+    if (stepDirectionY === "up") {
+      for (let i = 1; i < countCellY; i++) {
+        checkCell = document.querySelector(
           `.box[data-letter="${startCellColumn}"][data-row="${
             startCellRow + i
           }"]`
         );
-        isCellOccupied = !!checkPiece.firstChild;
-        listCell.push(isCellOccupied);
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
       }
-      if (listCell.includes(true)) {
+      if (listOccupied.includes(true)) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
       }
-    } else if (step === "down") {
-      for (let i = 1; i < countCell; i++) {
-        let checkPiece = document.querySelector(
+    } else if (stepDirectionY === "down") {
+      for (let i = 1; i < countCellY; i++) {
+        checkCell = document.querySelector(
           `.box[data-letter="${startCellColumn}"][data-row="${
             startCellRow - i
           }"]`
         );
-        isCellOccupied = !!checkPiece.firstChild;
-        listCell.push(isCellOccupied);
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
       }
-      if (listCell.includes(true)) {
+      if (listOccupied.includes(true)) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
@@ -298,39 +304,32 @@ function rookMove(selectedPiece, startCell, destinationCell) {
     }
   } else if (startCellRow === destinationCellRow) {
     //controllo le righe
-    const step =
-      startCellColumnToNumber < destinationCellColumnToNumber
-        ? "right"
-        : "left";
-    countCell = Math.abs(
-      startCellColumnToNumber - destinationCellColumnToNumber
-    );
-    if (step === "right") {
-      for (let i = 1; i < countCell; i++) {
-        let checkPiece = document.querySelector(
+    if (stepDirectionX === "right") {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
           `.box[data-letter="${getLetterFromCoordinate(
             startCellColumnToNumber + i
           )}"][data-row="${startCellRow}"]`
         );
-        isCellOccupied = !!checkPiece.firstChild;
-        listCell.push(isCellOccupied);
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
       }
-      if (listCell.includes(true)) {
+      if (listOccupied.includes(true)) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
       }
-    } else if (step === "left") {
-      for (let i = 1; i < countCell; i++) {
-        let checkPiece = document.querySelector(
+    } else if (stepDirectionX === "left") {
+      for (let i = 1; i < countCellX; i++) {
+        checkCell = document.querySelector(
           `.box[data-letter="${getLetterFromCoordinate(
             startCellColumnToNumber - i
           )}"][data-row="${startCellRow}"]`
         );
-        isCellOccupied = !!checkPiece.firstChild;
-        listCell.push(isCellOccupied);
+        isCellOccupied = !!checkCell.firstChild;
+        listOccupied.push(isCellOccupied);
       }
-      if (listCell.includes(true)) {
+      if (listOccupied.includes(true)) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
