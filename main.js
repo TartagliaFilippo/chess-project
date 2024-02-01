@@ -3,7 +3,10 @@ let pieceColor = null;
 let selectedPiece = null;
 let startCell = null;
 let letterToNumber = null;
-let kingIsMoved = false;
+let whiteKingIsMoved = false;
+let blackKingIsMoved = false;
+let whiteRookIsMoved = false;
+let blackRookIsMoved = false;
 let currentPlayer = "white";
 document.getElementById("turn").innerHTML = currentPlayer;
 
@@ -284,6 +287,9 @@ function rookMove(selectedPiece, startCell, destinationCell) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
+        pieceColor === "white"
+          ? (whiteRookIsMoved = true)
+          : (blackRookIsMoved = true);
       }
     } else if (stepDirectionY === "down") {
       for (let i = 1; i < countCellY; i++) {
@@ -299,6 +305,9 @@ function rookMove(selectedPiece, startCell, destinationCell) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
+        pieceColor === "white"
+          ? (whiteRookIsMoved = true)
+          : (blackRookIsMoved = true);
       }
     } else {
       return;
@@ -319,6 +328,9 @@ function rookMove(selectedPiece, startCell, destinationCell) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
+        pieceColor === "white"
+          ? (whiteRookIsMoved = true)
+          : (blackRookIsMoved = true);
       }
     } else if (stepDirectionX === "left") {
       for (let i = 1; i < countCellX; i++) {
@@ -334,6 +346,9 @@ function rookMove(selectedPiece, startCell, destinationCell) {
         return;
       } else {
         movePiece(selectedPiece, destinationCell);
+        pieceColor === "white"
+          ? (whiteRookIsMoved = true)
+          : (blackRookIsMoved = true);
       }
     } else {
       return;
@@ -706,6 +721,7 @@ function queenMove(selectedPiece, startCell, destinationCell) {
 }
 
 function kingMove(selectedPiece, startCell, destinationCell) {
+  const pieceColor = selectedPiece.id.includes("white") ? "white" : "black";
   const startCellRow = parseInt(startCell.dataset.row);
   const startCellColumn = startCell.dataset.letter;
   let startCellColumnToNumber = getCoordinateLetter(startCell);
@@ -723,11 +739,15 @@ function kingMove(selectedPiece, startCell, destinationCell) {
   let isCellOccupied;
   let listOccupied = [];
 
-  if (destinationCellRow === 1 || destinationCellColumn === "g") {
-    shortCastling(selectedPiece, startCell, destinationCell, kingIsMoved);
-  } else {
-    return;
-  }
+  shortCastling(
+    selectedPiece,
+    startCell,
+    destinationCell,
+    blackKingIsMoved,
+    whiteKingIsMoved,
+    blackRookIsMoved,
+    whiteRookIsMoved
+  );
 
   if (startCellRow === destinationCellRow) {
     if (destinationCellColumnToNumber === startCellColumnToNumber - 1) {
@@ -747,7 +767,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -768,7 +790,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -793,7 +817,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -813,7 +839,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -841,7 +869,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -869,7 +899,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -897,7 +929,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -925,7 +959,9 @@ function kingMove(selectedPiece, startCell, destinationCell) {
           return;
         } else {
           movePiece(selectedPiece, destinationCell);
-          kingIsMoved = true;
+          pieceColor === "white"
+            ? (whiteKingIsMoved = true)
+            : (blackKingIsMoved = true);
         }
       } else {
         return;
@@ -938,7 +974,15 @@ function kingMove(selectedPiece, startCell, destinationCell) {
   }
 }
 
-function shortCastling(selectedPiece, startCell, destinationCell, kingIsMoved) {
+function shortCastling(
+  selectedPiece,
+  startCell,
+  destinationCell,
+  whiteKingIsMoved,
+  blackKingIsMoved,
+  whiteRookIsMoved,
+  blackRookIsMoved
+) {
   const pieceColor = selectedPiece.id.includes("white") ? "white" : "black";
   const startCellRow = parseInt(startCell.dataset.row);
   const startCellColumn = startCell.dataset.letter;
@@ -956,7 +1000,7 @@ function shortCastling(selectedPiece, startCell, destinationCell, kingIsMoved) {
   let checkRookElement;
   const checkListOccupied = [false, false, true];
 
-  if (kingIsMoved === false) {
+  if (whiteKingIsMoved === false && whiteRookIsMoved === false) {
     if (pieceColor === "white") {
       for (let i = 1; i <= 3; i++) {
         checkCell = document.querySelector(
@@ -1009,7 +1053,11 @@ function shortCastling(selectedPiece, startCell, destinationCell, kingIsMoved) {
       } else {
         return;
       }
-    } else if (pieceColor === "black") {
+    } else {
+      return;
+    }
+  } else if (blackKingIsMoved === false && blackRookIsMoved === false) {
+    if (pieceColor === "black") {
       for (let i = 1; i <= 3; i++) {
         checkCell = document.querySelector(
           `.box[data-letter="${getLetterFromCoordinate(
