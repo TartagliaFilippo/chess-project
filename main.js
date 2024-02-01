@@ -169,6 +169,10 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   let checkDestionationRow = parseInt(startCell.dataset.row);
   let checkCellElement = destinationCell.firstElementChild; // controllo se c'è un pezzo
   let isDestinationOccupied = !!checkCellElement;
+  let countCell = Math.abs(destinationCellRow - startCellRow);
+  let checkCell;
+  let isOccupied;
+  let listOccupied = [];
 
   if (startCellColumn === destinationCellColumn) {
     //movimento pedoni
@@ -177,7 +181,16 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
         if (startCellRow === 2) {
           checkDestionationRow += 2;
           if (destinationCellRow <= checkDestionationRow) {
-            if (isDestinationOccupied === true) {
+            for (let i = 1; i <= countCell; i++) {
+              checkCell = document.querySelector(
+                `.box[data-letter="${startCellColumn}"][data-row="${
+                  startCellRow + i
+                }"]`
+              );
+              isOccupied = !!checkCell.firstChild;
+              listOccupied.push(isOccupied);
+            }
+            if (listOccupied.includes(true)) {
               return;
             } else {
               movePiece(selectedPiece, destinationCell);
@@ -203,7 +216,16 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
         if (startCellRow === 7) {
           checkDestionationRow -= 2;
           if (destinationCellRow >= checkDestionationRow) {
-            if (isDestinationOccupied === true) {
+            for (let i = 1; i <= countCell; i++) {
+              checkCell = document.querySelector(
+                `.box[data-letter="${startCellColumn}"][data-row="${
+                  startCellRow - i
+                }"]`
+              );
+              isOccupied = !!checkCell.firstChild;
+              listOccupied.push(isOccupied);
+            }
+            if (listOccupied.includes(true)) {
               return;
             } else {
               movePiece(selectedPiece, destinationCell);
