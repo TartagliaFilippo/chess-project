@@ -3,6 +3,7 @@ let pieceColor = null;
 let selectedPiece = null;
 let startCell = null;
 let letterToNumber = null;
+let lastMovePawn = null;
 let whiteKingIsMoved = false;
 let blackKingIsMoved = false;
 let whiteRookIsMoved = false;
@@ -15,6 +16,7 @@ document.querySelectorAll(".box").forEach(function (cell) {
     const clickedCell = event.currentTarget;
     const clickedRow = event.currentTarget.dataset.row;
     const clickedColumn = event.currentTarget.dataset.letter;
+    console.log(lastMovePawn);
 
     if (!selectedPiece) {
       // seleziona il pezzo cliccato
@@ -72,6 +74,11 @@ function movePiece(pieceElement, destinationCell) {
     } else {
       return;
     }
+  }
+
+  const selectedPiece = pieceElement.id;
+  if (!selectedPiece.includes("pawn")) {
+    lastMovePawn = null;
   }
 
   // muovo il pezzo nella casella di destinazione
@@ -166,6 +173,7 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   let startCellColumnToNumber = getCoordinateLetter(startCell);
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
+  let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
   let checkDestionationRow = parseInt(startCell.dataset.row);
   let checkCellElement = destinationCell.firstElementChild; // controllo se c'è un pezzo
   let isDestinationOccupied = !!checkCellElement;
@@ -173,6 +181,13 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
   let checkCell;
   let isOccupied;
   let listOccupied = [];
+
+  if (lastMovePawn === startCellColumnToNumber + 1) {
+    console.log("entro");
+    enPasantMoveRight(selectedPiece, startCell, destinationCell);
+  } else if (lastMovePawn === startCellColumnToNumber - 1) {
+    enPasantMoveLeft(selectedPiece, startCell, destinationCell);
+  }
 
   if (startCellColumn === destinationCellColumn) {
     //movimento pedoni
@@ -194,6 +209,11 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
               return;
             } else {
               movePiece(selectedPiece, destinationCell);
+              if (countCell === 2) {
+                lastMovePawn = destinationCellColumnToNumber;
+              } else {
+                lastMovePawn = null;
+              }
             }
           }
         } else if (startCellRow > 2) {
@@ -203,6 +223,7 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
               return;
             } else {
               movePiece(selectedPiece, destinationCell);
+              lastMovePawn = null;
             }
           } else {
             return;
@@ -229,6 +250,11 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
               return;
             } else {
               movePiece(selectedPiece, destinationCell);
+              if (countCell === 2) {
+                lastMovePawn = destinationCellColumnToNumber;
+              } else {
+                lastMovePawn = null;
+              }
             }
           }
         } else if (startCellRow < 7) {
@@ -238,6 +264,7 @@ function pawnMove(selectedPiece, startCell, destinationCell) {
               return;
             } else {
               movePiece(selectedPiece, destinationCell);
+              lastMovePawn = null;
             }
           }
         } else {
@@ -1183,8 +1210,6 @@ function longCastling(
   const destinationCellRow = parseInt(destinationCell.dataset.row);
   const destinationCellColumn = destinationCell.dataset.letter;
   let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
-  const stepDirectionX =
-    startCellColumnToNumber > destinationCellColumnToNumber ? "left" : "right";
   const rookElement = document.getElementById(`${pieceColor}-rook-0`);
   let checkCell;
   let isCellOccupied;
@@ -1298,6 +1323,182 @@ function longCastling(
           }
         } else {
           return;
+        }
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  } else {
+    return;
+  }
+}
+
+function enPasantMoveRight(selectedPiece, startCell, destinationCell) {
+  const pieceColor = selectedPiece.id.includes("white") ? "white" : "black";
+  const startCellRow = parseInt(startCell.dataset.row);
+  const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCell);
+  const destinationCellRow = parseInt(destinationCell.dataset.row);
+  const destinationCellColumn = destinationCell.dataset.letter;
+  let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
+
+  if (pieceColor === "white") {
+    if (startCellRow === 5) {
+      const pawnMoveElement = startCell.firstChild;
+      const opponentCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber + 1
+        )}"][data-row="${startCellRow}"]`
+      );
+      if (
+        destinationCellColumnToNumber === startCellColumnToNumber + 1 &&
+        destinationCellRow === startCellRow + 1
+      ) {
+        const opponentPawnElement = opponentCell.firstChild;
+        const putPawn = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + 1
+          )}"][data-row="${startCellRow + 1}"]`
+        );
+
+        const pawnWhiteElement = document.createElement("img");
+        pawnWhiteElement.src = "./img/chess-pieces/white-pawn.svg";
+        pawnWhiteElement.id = `white-pawn-${startCellColumnToNumber - 10}`;
+
+        startCell.removeChild(pawnMoveElement);
+        opponentCell.removeChild(opponentPawnElement);
+        putPawn.appendChild(pawnWhiteElement);
+
+        if (startCell !== destinationCell) {
+          currentPlayer = currentPlayer === "white" ? "black" : "white";
+          document.getElementById("turn").innerHTML = currentPlayer;
+        }
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  } else if (pieceColor === "black") {
+    if (startCellRow === 4) {
+      const pawnMoveElement = startCell.firstChild;
+      const opponentCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber + 1
+        )}"][data-row="${startCellRow}"]`
+      );
+      if (
+        destinationCellColumnToNumber === startCellColumnToNumber + 1 &&
+        destinationCellRow === startCellRow - 1
+      ) {
+        const opponentPawnElement = opponentCell.firstChild;
+        const putPawn = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + 1
+          )}"][data-row="${startCellRow - 1}"]`
+        );
+
+        const pawnBlackElement = document.createElement("img");
+        pawnBlackElement.src = "./img/chess-pieces/black-pawn.svg";
+        pawnBlackElement.id = `black-pawn-${startCellColumnToNumber - 10}`;
+
+        startCell.removeChild(pawnMoveElement);
+        opponentCell.removeChild(opponentPawnElement);
+        putPawn.appendChild(pawnBlackElement);
+
+        if (startCell !== destinationCell) {
+          currentPlayer = currentPlayer === "white" ? "black" : "white";
+          document.getElementById("turn").innerHTML = currentPlayer;
+        }
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  } else {
+    return;
+  }
+}
+
+function enPasantMoveLeft(selectedPiece, startCell, destinationCell) {
+  const pieceColor = selectedPiece.id.includes("white") ? "white" : "black";
+  const startCellRow = parseInt(startCell.dataset.row);
+  const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCell);
+  const destinationCellRow = parseInt(destinationCell.dataset.row);
+  const destinationCellColumn = destinationCell.dataset.letter;
+  let destinationCellColumnToNumber = getCoordinateLetter(destinationCell);
+
+  if (pieceColor === "white") {
+    if (startCellRow === 5) {
+      const pawnMoveElement = startCell.firstChild;
+      const opponentCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber - 1
+        )}"][data-row="${startCellRow}"]`
+      );
+      if (
+        destinationCellColumnToNumber === startCellColumnToNumber - 1 &&
+        destinationCellRow === startCellRow + 1
+      ) {
+        const opponentPawnElement = opponentCell.firstChild;
+        const putPawn = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - 1
+          )}"][data-row="${startCellRow + 1}"]`
+        );
+
+        const pawnWhiteElement = document.createElement("img");
+        pawnWhiteElement.src = "./img/chess-pieces/white-pawn.svg";
+        pawnWhiteElement.id = `white-pawn-${startCellColumnToNumber - 10}`;
+
+        startCell.removeChild(pawnMoveElement);
+        opponentCell.removeChild(opponentPawnElement);
+        putPawn.appendChild(pawnWhiteElement);
+
+        if (startCell !== destinationCell) {
+          currentPlayer = currentPlayer === "white" ? "black" : "white";
+          document.getElementById("turn").innerHTML = currentPlayer;
+        }
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  } else if (pieceColor === "black") {
+    if (startCellRow === 4) {
+      const pawnMoveElement = startCell.firstChild;
+      const opponentCell = document.querySelector(
+        `.box[data-letter="${getLetterFromCoordinate(
+          startCellColumnToNumber - 1
+        )}"][data-row="${startCellRow}"]`
+      );
+      if (
+        destinationCellColumnToNumber === startCellColumnToNumber - 1 &&
+        destinationCellRow === startCellRow - 1
+      ) {
+        const opponentPawnElement = opponentCell.firstChild;
+        const putPawn = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - 1
+          )}"][data-row="${startCellRow - 1}"]`
+        );
+
+        const pawnBlackElement = document.createElement("img");
+        pawnBlackElement.src = "./img/chess-pieces/black-pawn.svg";
+        pawnBlackElement.id = `black-pawn-${startCellColumnToNumber - 10}`;
+
+        startCell.removeChild(pawnMoveElement);
+        opponentCell.removeChild(opponentPawnElement);
+        putPawn.appendChild(pawnBlackElement);
+
+        if (startCell !== destinationCell) {
+          currentPlayer = currentPlayer === "white" ? "black" : "white";
+          document.getElementById("turn").innerHTML = currentPlayer;
         }
       } else {
         return;
