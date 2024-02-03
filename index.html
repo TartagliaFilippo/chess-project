@@ -11,7 +11,19 @@
     <title>Chess</title>
     <link rel="stylesheet" href="style.css" />
     <script src="pieces.js" defer></script>
-    <script src="main.js" defer></script>
+    <script type="module" src="getLogic.js"></script>
+    <script type="module" src="./movement/special/enPasantLeft.js"></script>
+    <script type="module" src="./movement/special/enPasantRight.js"></script>
+    <script type="module" src="./movement/special/longCastling.js"></script>
+    <script type="module" src="./movement/special/shortCastling.js"></script>
+    <script type="module" src="./movement/moveLogic.js"></script>
+    <script type="module" src="./movement/bishopMove.js"></script>
+    <script type="module" src="./movement/kingMove.js"></script>
+    <script type="module" src="./movement/knightMove.js"></script>
+    <script type="module" src="./movement/pawnMove.js"></script>
+    <script type="module" src="./movement/queenMove.js"></script>
+    <script type="module" src="./movement/rookMove.js"></script>
+    <script type="module" src="mainLogic.js" defer></script>
   </head>
   <body>
     <div class="wrapper">
