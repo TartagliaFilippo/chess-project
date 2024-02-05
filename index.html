@@ -10,8 +10,8 @@
     />
     <title>Chess</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="pieces.js" defer></script>
-    <script src="main.js" defer></script>
+    <script src="pieces-retest.js" defer></script>
+    <script type="module" src="main-retest.js" defer></script>
   </head>
   <body>
     <div class="wrapper">
@@ -65,244 +65,84 @@
           <!-- tavolo di gioco -->
           <div class="play-ground">
             <div class="row row-8">
-              <div
-                class="box black-rook"
-                id="a8"
-                data-row="8"
-                data-letter="a"
-              ></div>
-              <div
-                class="box black-knight"
-                id="b8"
-                data-row="8"
-                data-letter="b"
-              ></div>
-              <div
-                class="box black-bishop"
-                id="c8"
-                data-row="8"
-                data-letter="c"
-              ></div>
-              <div
-                class="box black-queen"
-                id="d8"
-                data-row="8"
-                data-letter="d"
-              ></div>
-              <div
-                class="box black-king"
-                id="e8"
-                data-row="8"
-                data-letter="e"
-              ></div>
-              <div
-                class="box black-bishop"
-                id="f8"
-                data-row="8"
-                data-letter="f"
-              ></div>
-              <div
-                class="box black-knight"
-                id="g8"
-                data-row="8"
-                data-letter="g"
-              ></div>
-              <div
-                class="box black-rook"
-                id="h8"
-                data-row="8"
-                data-letter="h"
-              ></div>
+              <div class="cell" id="a8" data-row="8" data-letter="a"></div>
+              <div class="cell" id="b8" data-row="8" data-letter="b"></div>
+              <div class="cell" id="c8" data-row="8" data-letter="c"></div>
+              <div class="cell" id="d8" data-row="8" data-letter="d"></div>
+              <div class="cell" id="e8" data-row="8" data-letter="e"></div>
+              <div class="cell" id="f8" data-row="8" data-letter="f"></div>
+              <div class="cell" id="g8" data-row="8" data-letter="g"></div>
+              <div class="cell" id="h8" data-row="8" data-letter="h"></div>
             </div>
             <div class="row row-7">
-              <div
-                class="box black-pawn"
-                id="a7"
-                data-row="7"
-                data-letter="a"
-              ></div>
-              <div
-                class="box black-pawn"
-                id="b7"
-                data-row="7"
-                data-letter="b"
-              ></div>
-              <div
-                class="box black-pawn"
-                id="c7"
-                data-row="7"
-                data-letter="c"
-              ></div>
-              <div
-                class="box black-pawn"
-                id="d7"
-                data-row="7"
-                data-letter="d"
-              ></div>
-              <div
-                class="box black-pawn"
-                id="e7"
-                data-row="7"
-                data-letter="e"
-              ></div>
-              <div
-                class="box black-pawn"
-                id="f7"
-                data-row="7"
-                data-letter="f"
-              ></div>
-              <div
-                class="box black-pawn"
-                id="g7"
-                data-row="7"
-                data-letter="g"
-              ></div>
-              <div
-                class="box black-pawn"
-                id="h7"
-                data-row="7"
-                data-letter="h"
-              ></div>
+              <div class="cell" id="a7" data-row="7" data-letter="a"></div>
+              <div class="cell" id="b7" data-row="7" data-letter="b"></div>
+              <div class="cell" id="c7" data-row="7" data-letter="c"></div>
+              <div class="cell" id="d7" data-row="7" data-letter="d"></div>
+              <div class="cell" id="e7" data-row="7" data-letter="e"></div>
+              <div class="cell" id="f7" data-row="7" data-letter="f"></div>
+              <div class="cell" id="g7" data-row="7" data-letter="g"></div>
+              <div class="cell" id="h7" data-row="7" data-letter="h"></div>
             </div>
             <div class="row row-6">
-              <div class="box" id="a6" data-row="6" data-letter="a"></div>
-              <div class="box" id="b6" data-row="6" data-letter="b"></div>
-              <div class="box" id="c6" data-row="6" data-letter="c"></div>
-              <div class="box" id="d6" data-row="6" data-letter="d"></div>
-              <div class="box" id="e6" data-row="6" data-letter="e"></div>
-              <div class="box" id="f6" data-row="6" data-letter="f"></div>
-              <div class="box" id="g6" data-row="6" data-letter="g"></div>
-              <div class="box" id="h6" data-row="6" data-letter="h"></div>
+              <div class="cell" id="a6" data-row="6" data-letter="a"></div>
+              <div class="cell" id="b6" data-row="6" data-letter="b"></div>
+              <div class="cell" id="c6" data-row="6" data-letter="c"></div>
+              <div class="cell" id="d6" data-row="6" data-letter="d"></div>
+              <div class="cell" id="e6" data-row="6" data-letter="e"></div>
+              <div class="cell" id="f6" data-row="6" data-letter="f"></div>
+              <div class="cell" id="g6" data-row="6" data-letter="g"></div>
+              <div class="cell" id="h6" data-row="6" data-letter="h"></div>
             </div>
             <div class="row row-5">
-              <div class="box" id="a5" data-row="5" data-letter="a"></div>
-              <div class="box" id="b5" data-row="5" data-letter="b"></div>
-              <div class="box" id="c5" data-row="5" data-letter="c"></div>
-              <div class="box" id="d5" data-row="5" data-letter="d"></div>
-              <div class="box" id="e5" data-row="5" data-letter="e"></div>
-              <div class="box" id="f5" data-row="5" data-letter="f"></div>
-              <div class="box" id="g5" data-row="5" data-letter="g"></div>
-              <div class="box" id="h5" data-row="5" data-letter="h"></div>
+              <div class="cell" id="a5" data-row="5" data-letter="a"></div>
+              <div class="cell" id="b5" data-row="5" data-letter="b"></div>
+              <div class="cell" id="c5" data-row="5" data-letter="c"></div>
+              <div class="cell" id="d5" data-row="5" data-letter="d"></div>
+              <div class="cell" id="e5" data-row="5" data-letter="e"></div>
+              <div class="cell" id="f5" data-row="5" data-letter="f"></div>
+              <div class="cell" id="g5" data-row="5" data-letter="g"></div>
+              <div class="cell" id="h5" data-row="5" data-letter="h"></div>
             </div>
             <div class="row row-4">
-              <div class="box" id="a4" data-row="4" data-letter="a"></div>
-              <div class="box" id="b4" data-row="4" data-letter="b"></div>
-              <div class="box" id="c4" data-row="4" data-letter="c"></div>
-              <div class="box" id="d4" data-row="4" data-letter="d"></div>
-              <div class="box" id="e4" data-row="4" data-letter="e"></div>
-              <div class="box" id="f4" data-row="4" data-letter="f"></div>
-              <div class="box" id="g4" data-row="4" data-letter="g"></div>
-              <div class="box" id="h4" data-row="4" data-letter="h"></div>
+              <div class="cell" id="a4" data-row="4" data-letter="a"></div>
+              <div class="cell" id="b4" data-row="4" data-letter="b"></div>
+              <div class="cell" id="c4" data-row="4" data-letter="c"></div>
+              <div class="cell" id="d4" data-row="4" data-letter="d"></div>
+              <div class="cell" id="e4" data-row="4" data-letter="e"></div>
+              <div class="cell" id="f4" data-row="4" data-letter="f"></div>
+              <div class="cell" id="g4" data-row="4" data-letter="g"></div>
+              <div class="cell" id="h4" data-row="4" data-letter="h"></div>
             </div>
             <div class="row row-3">
-              <div class="box" id="a3" data-row="3" data-letter="a"></div>
-              <div class="box" id="b3" data-row="3" data-letter="b"></div>
-              <div class="box" id="c3" data-row="3" data-letter="c"></div>
-              <div class="box" id="d3" data-row="3" data-letter="d"></div>
-              <div class="box" id="e3" data-row="3" data-letter="e"></div>
-              <div class="box" id="f3" data-row="3" data-letter="f"></div>
-              <div class="box" id="g3" data-row="3" data-letter="g"></div>
-              <div class="box" id="h3" data-row="3" data-letter="h"></div>
+              <div class="cell" id="a3" data-row="3" data-letter="a"></div>
+              <div class="cell" id="b3" data-row="3" data-letter="b"></div>
+              <div class="cell" id="c3" data-row="3" data-letter="c"></div>
+              <div class="cell" id="d3" data-row="3" data-letter="d"></div>
+              <div class="cell" id="e3" data-row="3" data-letter="e"></div>
+              <div class="cell" id="f3" data-row="3" data-letter="f"></div>
+              <div class="cell" id="g3" data-row="3" data-letter="g"></div>
+              <div class="cell" id="h3" data-row="3" data-letter="h"></div>
             </div>
             <div class="row row-2">
-              <div
-                class="box white-pawn"
-                id="a2"
-                data-row="2"
-                data-letter="a"
-              ></div>
-              <div
-                class="box white-pawn"
-                id="b2"
-                data-row="2"
-                data-letter="b"
-              ></div>
-              <div
-                class="box white-pawn"
-                id="c2"
-                data-row="2"
-                data-letter="c"
-              ></div>
-              <div
-                class="box white-pawn"
-                id="d2"
-                data-row="2"
-                data-letter="d"
-              ></div>
-              <div
-                class="box white-pawn"
-                id="e2"
-                data-row="2"
-                data-letter="e"
-              ></div>
-              <div
-                class="box white-pawn"
-                id="f2"
-                data-row="2"
-                data-letter="f"
-              ></div>
-              <div
-                class="box white-pawn"
-                id="g2"
-                data-row="2"
-                data-letter="g"
-              ></div>
-              <div
-                class="box white-pawn"
-                id="h2"
-                data-row="2"
-                data-letter="h"
-              ></div>
+              <div class="cell" id="a2" data-row="2" data-letter="a"></div>
+              <div class="cell" id="b2" data-row="2" data-letter="b"></div>
+              <div class="cell" id="c2" data-row="2" data-letter="c"></div>
+              <div class="cell" id="d2" data-row="2" data-letter="d"></div>
+              <div class="cell" id="e2" data-row="2" data-letter="e"></div>
+              <div class="cell" id="f2" data-row="2" data-letter="f"></div>
+              <div class="cell" id="g2" data-row="2" data-letter="g"></div>
+              <div class="cell" id="h2" data-row="2" data-letter="h"></div>
             </div>
             <div class="row row-1">
-              <div
-                class="box white-rook"
-                id="a1"
-                data-row="1"
-                data-letter="a"
-              ></div>
-              <div
-                class="box white-knight"
-                id="b1"
-                data-row="1"
-                data-letter="b"
-              ></div>
-              <div
-                class="box white-bishop"
-                id="c1"
-                data-row="1"
-                data-letter="c"
-              ></div>
-              <div
-                class="box white-queen"
-                id="d1"
-                data-row="1"
-                data-letter="d"
-              ></div>
-              <div
-                class="box white-king"
-                id="e1"
-                data-row="1"
-                data-letter="e"
-              ></div>
-              <div
-                class="box white-bishop"
-                id="f1"
-                data-row="1"
-                data-letter="f"
-              ></div>
-              <div
-                class="box white-knight"
-                id="g1"
-                data-row="1"
-                data-letter="g"
-              ></div>
-              <div
-                class="box white-rook"
-                id="h1"
-                data-row="1"
-                data-letter="h"
-              ></div>
+              <div class="cell" id="a1" data-row="1" data-letter="a"></div>
+              <div class="cell" id="b1" data-row="1" data-letter="b"></div>
+              <div class="cell" id="c1" data-row="1" data-letter="c"></div>
+              <div class="cell" id="d1" data-row="1" data-letter="d"></div>
+              <div class="cell" id="e1" data-row="1" data-letter="e"></div>
+              <div class="cell" id="f1" data-row="1" data-letter="f"></div>
+              <div class="cell" id="g1" data-row="1" data-letter="g"></div>
+              <div class="cell" id="h1" data-row="1" data-letter="h"></div>
             </div>
           </div>
         </div>
