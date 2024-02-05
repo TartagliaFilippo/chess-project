@@ -8,6 +8,8 @@ let whiteKingIsMoved = false;
 let blackKingIsMoved = false;
 let whiteRookIsMoved = false;
 let blackRookIsMoved = false;
+let checkToWhiteKing = false;
+let checkToBlackKing = false;
 let currentPlayer = "white";
 document.getElementById("turn").innerHTML = currentPlayer;
 
@@ -1508,5 +1510,92 @@ function enPasantMoveLeft(selectedPiece, startCell, destinationCell) {
     }
   } else {
     return;
+  }
+}
+
+function checkCellKing(possibleCell, checkToKing) {
+  let possibleCellElement;
+
+  if (possibleCell.firstChild) {
+    possibleCellElement = possibleCell.firstChild.id;
+    if (possibleCellElement.includes("king")) {
+      checkToKing = true;
+      return checkToKing;
+    } else {
+      return;
+    }
+  } else {
+    return;
+  }
+}
+
+function possibleMove(
+  selectedPiece,
+  startCell,
+  checkToBlackKing,
+  checkToWhiteKing
+) {
+  const pieceType = getPieceType(selectedPiece);
+  const startCellRow = startCell.dataset.row;
+  const startCellColumn = startCell.dataset.letter;
+  let startCellColumnToNumber = getCoordinateLetter(startCellColumn);
+  let countMoveCell;
+  let possibleCell;
+  const moveList = [];
+
+  if (pieceType === "pawn") {
+    if (startCellColumn === "a") {
+      if (pieceColor === "white") {
+        possibleCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + 1
+          )}"][data-row="${startCellRow + 1}"]`
+        );
+
+        checkCellKing(possibleCell, checkToBlackKing);
+      } else if (pieceColor === "black") {
+        possibleCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber + 1
+          )}"][data-row="${startCellRow - 1}"]`
+        );
+
+        checkCellKing(possibleCell, checkToWhiteKing);
+      } else {
+        return;
+      }
+    } else if (startCellColumn === "h") {
+      if (pieceColor === "white") {
+        possibleCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - 1
+          )}"][data-row="${startCellRow + 1}"]`
+        );
+
+        checkCellKing(possibleCell, checkToBlackKing);
+      } else if (pieceColor === "black") {
+        possibleCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - 1
+          )}"][data-row="${startCellRow - 1}"]`
+        );
+
+        checkCellKing(possibleCell, checkToWhiteKing);
+      } else {
+        return;
+      }
+    } else {
+      if (pieceColor === "white") {
+        possibleCell = document.querySelector(
+          `.box[data-letter="${getLetterFromCoordinate(
+            startCellColumnToNumber - 1
+          )}"][data-row="${startCellRow + 1}"]`
+        );
+      } else if (pieceColor === "black") {
+      } else {
+        return;
+      }
+    }
+  } else if (pieceType === "rook") {
   }
 }
