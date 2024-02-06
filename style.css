@@ -111,6 +111,10 @@ main {
   background-color: rgba(0, 255, 0, 0.5);
 }
 
+img {
+  max-width: 100%;
+}
+
 /* COLORI CASELLE */
 .row:nth-child(odd) .cell:nth-child(odd) {
   background-color: #f5f5dc;

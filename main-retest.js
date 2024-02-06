@@ -6,7 +6,7 @@ import {
 } from "./get-functions.js";
 
 import { kingMoves } from "./king-move.js";
-
+import { queenMove } from "./queen-move.js";
 import { movePiece } from "./move.js";
 
 let checkToWhiteKing = false;
@@ -18,9 +18,8 @@ let piece;
 let pieceType;
 let pieceColor;
 let listPossibleMove = [];
-let listPossibleCapture = [];
-const maxCell = 9;
-const minCell = 0;
+const maxCell = 8;
+const minCell = 1;
 
 document.querySelectorAll(".cell").forEach(function (cell) {
   cell.addEventListener("click", function (event) {
@@ -41,18 +40,26 @@ document.querySelectorAll(".cell").forEach(function (cell) {
       console.log(startColumn, "-", startRow);
       if (pieceType === "king") {
         listPossibleMove = kingMoves(startRow, startColumn, pieceColor);
+      } else if (pieceType === "queen") {
+        listPossibleMove = queenMove(
+          startRow,
+          startColumn,
+          pieceColor,
+          maxCell
+        );
       }
     } else if (startCell && startCell !== selectedCell) {
-      destinationCell = selectedCell;
+      // elimino gli elementi "move"
+      document.querySelectorAll(".cell .move").forEach(function (elementMove) {
+        elementMove.parentNode.removeChild(elementMove);
+      });
+
       if (destinationCell.firstElementChild) {
+        console.log("qui entro");
         const destinationCellElement = destinationCell.firstElementChild;
+        console.log(destinationCellElement);
         const elementColor = getPieceColor(destinationCellElement);
         if (elementColor === pieceColor) {
-          document
-            .querySelectorAll(".cell .move")
-            .forEach(function (elementMove) {
-              elementMove.parentNode.removeChild(elementMove);
-            });
           piece.style.backgroundColor = "";
           piece = null;
           startCell = null;
@@ -61,6 +68,7 @@ document.querySelectorAll(".cell").forEach(function (cell) {
           return;
         }
       }
+
       movePiece(
         piece,
         startCell,
