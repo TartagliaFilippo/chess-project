@@ -8,6 +8,7 @@ import {
 import { kingMoves } from "./king-move.js";
 import { queenMove } from "./queen-move.js";
 import { rookMove } from "./rook-move.js";
+import { bishopMove } from "./bishop-move.js";
 import { movePiece } from "./move.js";
 
 let whiteKingCell = { row: 1, column: "e" };
@@ -59,6 +60,13 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         );
       } else if (pieceType === "rook") {
         listPossibleMove = rookMove(startRow, startColumn, pieceColor, maxCell);
+      } else if (pieceType === "bishop") {
+        listPossibleMove = bishopMove(
+          startRow,
+          startColumn,
+          pieceColor,
+          maxCell
+        );
       }
     } else if (startCell && startCell !== selectedCell) {
       destinationCell = selectedCell;
