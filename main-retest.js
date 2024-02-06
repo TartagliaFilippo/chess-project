@@ -7,6 +7,7 @@ import {
 
 import { kingMoves } from "./king-move.js";
 import { queenMove } from "./queen-move.js";
+import { rookMove } from "./rook-move.js";
 import { movePiece } from "./move.js";
 
 let whiteKingCell = { row: 1, column: "e" };
@@ -56,6 +57,8 @@ document.querySelectorAll(".cell").forEach(function (cell) {
           pieceColor,
           maxCell
         );
+      } else if (pieceType === "rook") {
+        listPossibleMove = rookMove(startRow, startColumn, pieceColor, maxCell);
       }
     } else if (startCell && startCell !== selectedCell) {
       destinationCell = selectedCell;
@@ -77,7 +80,6 @@ document.querySelectorAll(".cell").forEach(function (cell) {
           return;
         }
       }
-
       movePiece(
         piece,
         startCell,

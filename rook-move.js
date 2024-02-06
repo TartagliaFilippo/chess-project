@@ -1,7 +1,7 @@
 import { getCoordinateLetter, toggleColor } from "./get-functions.js";
 import { addPossibleMove } from "./move.js";
 
-function queenMove(startRow, startColumn, color, maxCell) {
+function rookMove(startRow, startColumn, color, maxCell) {
   let listPossibleMove = [];
   const startColumnNumber = getCoordinateLetter(startColumn);
   const oppositeColor = toggleColor(color);
@@ -82,78 +82,6 @@ function queenMove(startRow, startColumn, color, maxCell) {
     }
   }
 
-  // mosse obliqua basso-sinistra
-  for (let i = 1; i <= countCellXLeft; i++) {
-    let element = addPossibleMove(startRow - i, startColumnNumber - i);
-    if (element !== addPossibleMove(startRow, startColumn)) {
-      if (!element.firstElementChild) {
-        listPossibleMove.push(element);
-      } else if (element.firstElementChild) {
-        let checkIdPiece = element.firstElementChild.id;
-        if (checkIdPiece.includes(oppositeColor)) {
-          listPossibleMove.push(element);
-          break;
-        } else {
-          break;
-        }
-      }
-    }
-  }
-
-  // mosse obliqua alto-sinistra
-  for (let i = 1; i <= countCellXLeft; i++) {
-    let element = addPossibleMove(startRow + i, startColumnNumber - i);
-    if (element !== addPossibleMove(startRow, startColumn)) {
-      if (!element.firstElementChild) {
-        listPossibleMove.push(element);
-      } else if (element.firstElementChild) {
-        let checkIdPiece = element.firstElementChild.id;
-        if (checkIdPiece.includes(oppositeColor)) {
-          listPossibleMove.push(element);
-          break;
-        } else {
-          break;
-        }
-      }
-    }
-  }
-
-  // mosse obliqua basso-destra
-  for (let i = 1; i <= countCellXRight; i++) {
-    let element = addPossibleMove(startRow - i, startColumnNumber + i);
-    if (element !== addPossibleMove(startRow, startColumn)) {
-      if (!element.firstElementChild) {
-        listPossibleMove.push(element);
-      } else if (element.firstElementChild) {
-        let checkIdPiece = element.firstElementChild.id;
-        if (checkIdPiece.includes(oppositeColor)) {
-          listPossibleMove.push(element);
-          break;
-        } else {
-          break;
-        }
-      }
-    }
-  }
-
-  // mosse obliqua alto-destra
-  for (let i = 1; i <= countCellXRight; i++) {
-    let element = addPossibleMove(startRow + i, startColumnNumber + i);
-    if (element !== addPossibleMove(startRow, startColumn)) {
-      if (!element.firstElementChild) {
-        listPossibleMove.push(element);
-      } else if (element.firstElementChild) {
-        let checkIdPiece = element.firstElementChild.id;
-        if (checkIdPiece.includes(oppositeColor)) {
-          listPossibleMove.push(element);
-          break;
-        } else {
-          break;
-        }
-      }
-    }
-  }
-
   for (let i = 0; i < listPossibleMove.length; i++) {
     let possibleCell = listPossibleMove[i];
 
@@ -166,4 +94,4 @@ function queenMove(startRow, startColumn, color, maxCell) {
   return listPossibleMove;
 }
 
-export { queenMove };
+export { rookMove };
