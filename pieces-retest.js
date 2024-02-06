@@ -3,6 +3,7 @@ const cell2 = document.getElementById("d1");
 const cell3 = document.getElementById("d8");
 const cell4 = document.getElementById("a8");
 const cell5 = document.getElementById("f8");
+const cell6 = document.getElementById("b1");
 
 const whiteKing = document.createElement("img");
 whiteKing.src = "./img/chess-pieces/white-king.svg";
@@ -33,3 +34,9 @@ bishopRook.src = "./img/chess-pieces/black-bishop.svg";
 bishopRook.id = "black-bishop";
 cell5.classList.add("black");
 cell5.appendChild(bishopRook);
+
+const whiteKnight = document.createElement("img");
+whiteKnight.src = "./img/chess-pieces/white-knight.svg";
+whiteKnight.id = "white-knight";
+cell6.classList.add("white");
+cell6.appendChild(whiteKnight);
