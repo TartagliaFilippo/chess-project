@@ -1,6 +1,6 @@
-const cell = document.getElementById("d4");
-const cell2 = document.getElementById("e5");
-const cell3 = document.getElementById("c4");
+const cell = document.getElementById("e1");
+const cell2 = document.getElementById("d1");
+const cell3 = document.getElementById("d8");
 
 const whiteKing = document.createElement("img");
 whiteKing.src = "./img/chess-pieces/white-king.svg";

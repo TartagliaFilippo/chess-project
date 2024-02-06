@@ -9,6 +9,13 @@ import { kingMoves } from "./king-move.js";
 import { queenMove } from "./queen-move.js";
 import { movePiece } from "./move.js";
 
+let whiteKingCell = { row: 1, column: "e" };
+
+let blackKingCell = {
+  row: 8,
+  column: "e",
+};
+
 let checkToWhiteKing = false;
 let checkToBlackKing = false;
 let selectedCell;
@@ -18,6 +25,8 @@ let piece;
 let pieceType;
 let pieceColor;
 let listPossibleMove = [];
+let listBlackMoves = [];
+let listWhiteMoves = [];
 const maxCell = 8;
 const minCell = 1;
 
@@ -49,13 +58,13 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         );
       }
     } else if (startCell && startCell !== selectedCell) {
+      destinationCell = selectedCell;
       // elimino gli elementi "move"
       document.querySelectorAll(".cell .move").forEach(function (elementMove) {
         elementMove.parentNode.removeChild(elementMove);
       });
 
       if (destinationCell.firstElementChild) {
-        console.log("qui entro");
         const destinationCellElement = destinationCell.firstElementChild;
         console.log(destinationCellElement);
         const elementColor = getPieceColor(destinationCellElement);
@@ -74,8 +83,11 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         startCell,
         destinationCell,
         pieceColor,
-        listPossibleMove
+        listPossibleMove,
+        whiteKingCell,
+        blackKingCell
       );
+      console.log("king: ", whiteKingCell);
       piece.style.backgroundColor = "";
       startCell = null;
       destinationCell = null;

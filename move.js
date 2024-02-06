@@ -4,7 +4,15 @@ import {
   getLetterCoordinate,
 } from "./get-functions.js";
 
-function movePiece(piece, startCell, destinationCell, color, listPossibleMove) {
+function movePiece(
+  piece,
+  startCell,
+  destinationCell,
+  color,
+  listPossibleMove,
+  whiteKingCell,
+  blackKingCell
+) {
   const hasPiece = destinationCell.firstElementChild;
   const oppositeColor = toggleColor(color);
 
@@ -26,6 +34,13 @@ function movePiece(piece, startCell, destinationCell, color, listPossibleMove) {
     startCell.classList.remove(color);
     destinationCell.classList.add(color);
     destinationCell.appendChild(piece);
+    if (piece.id === "white-king") {
+      whiteKingCell.row = destinationCell.dataset.row;
+      whiteKingCell.column = destinationCell.dataset.letter;
+    } else if (piece.id === "black-king") {
+      blackKingCell.row = destinationCell.dataset.row;
+      blackKingCell.column = destinationCell.dataset.letter;
+    }
   } else {
     return;
   }

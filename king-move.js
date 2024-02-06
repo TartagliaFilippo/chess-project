@@ -25,9 +25,10 @@ function kingMoves(startRow, startColumn, color) {
 
   for (let index = 0; index < checkListMove.length; index++) {
     let checkMove = checkListMove[index];
-
-    if (!checkMove.classList.contains(color)) {
-      listPossibleMove.push(checkMove);
+    if (checkMove !== null) {
+      if (!checkMove.classList.contains(color)) {
+        listPossibleMove.push(checkMove);
+      }
     }
   }
 
