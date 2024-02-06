@@ -4,6 +4,7 @@ const cell3 = document.getElementById("d8");
 const cell4 = document.getElementById("a8");
 const cell5 = document.getElementById("f8");
 const cell6 = document.getElementById("b1");
+const cell7 = document.getElementById("b2");
 
 const whiteKing = document.createElement("img");
 whiteKing.src = "./img/chess-pieces/white-king.svg";
@@ -40,3 +41,9 @@ whiteKnight.src = "./img/chess-pieces/white-knight.svg";
 whiteKnight.id = "white-knight";
 cell6.classList.add("white");
 cell6.appendChild(whiteKnight);
+
+const whitePawn = document.createElement("img");
+whitePawn.src = "./img/chess-pieces/white-pawn.svg";
+whitePawn.id = "white-pawn";
+cell7.classList.add("white");
+cell7.appendChild(whitePawn);
