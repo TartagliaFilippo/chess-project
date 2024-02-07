@@ -3,6 +3,7 @@ import {
   getPieceType,
   getCoordinateLetter,
   getLetterCoordinate,
+  getMovePossibilities,
 } from "./get-functions.js";
 
 import { kingMoves } from "./king-move.js";
@@ -12,6 +13,7 @@ import { bishopMove } from "./bishop-move.js";
 import { knightMove } from "./knight-move.js";
 import { pawnMove } from "./pawn-move.js";
 import { movePiece } from "./move.js";
+import { futureWhiteMoves, futureBlackMoves } from "./piece-position.js";
 
 let whiteKingCell = { row: 1, column: "e" };
 
@@ -36,6 +38,10 @@ const minCell = 1;
 
 document.querySelectorAll(".cell").forEach(function (cell) {
   cell.addEventListener("click", function (event) {
+    const listTotalMoves = futureWhiteMoves();
+
+    getMovePossibilities(listTotalMoves);
+
     selectedCell = event.currentTarget;
 
     if (selectedCell.firstElementChild === null) {
@@ -74,6 +80,7 @@ document.querySelectorAll(".cell").forEach(function (cell) {
       } else if (pieceType === "pawn") {
         listPossibleMove = pawnMove(startRow, startColumn, pieceColor);
       }
+      getMovePossibilities(listPossibleMove);
     } else if (startCell && startCell !== selectedCell) {
       destinationCell = selectedCell;
       // elimino gli elementi "move"
@@ -83,7 +90,6 @@ document.querySelectorAll(".cell").forEach(function (cell) {
 
       if (destinationCell.firstElementChild) {
         const destinationCellElement = destinationCell.firstElementChild;
-        console.log(destinationCellElement);
         const elementColor = getPieceColor(destinationCellElement);
         if (elementColor === pieceColor) {
           piece.style.backgroundColor = "";

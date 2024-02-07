@@ -32,15 +32,6 @@ function kingMoves(startRow, startColumn, color) {
     }
   }
 
-  for (let i = 0; i < listPossibleMove.length; i++) {
-    let possibleCell = listPossibleMove[i];
-
-    const elementMove = document.createElement("div");
-    elementMove.classList.add("move");
-
-    possibleCell.appendChild(elementMove);
-  }
-
   return listPossibleMove;
 }
 

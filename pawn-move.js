@@ -90,15 +90,6 @@ function pawnMove(startRow, startColumn, color) {
     return;
   }
 
-  for (let i = 0; i < listPossibleMove.length; i++) {
-    let possibleCell = listPossibleMove[i];
-
-    const elementMove = document.createElement("div");
-    elementMove.classList.add("move");
-
-    possibleCell.appendChild(elementMove);
-  }
-
   return listPossibleMove;
 }
 

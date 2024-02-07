@@ -1,4 +1,4 @@
-import { getCoordinateLetter } from "./get-functions.js";
+import { getCoordinateLetter, getMovePossibilities } from "./get-functions.js";
 import { addPossibleMove } from "./move.js";
 
 function knightMove(startRow, startColumn, color) {
@@ -30,15 +30,6 @@ function knightMove(startRow, startColumn, color) {
         listPossibleMove.push(checkMove);
       }
     }
-  }
-
-  for (let i = 0; i < listPossibleMove.length; i++) {
-    let possibleCell = listPossibleMove[i];
-
-    const elementMove = document.createElement("div");
-    elementMove.classList.add("move");
-
-    possibleCell.appendChild(elementMove);
   }
 
   return listPossibleMove;

@@ -70,10 +70,22 @@ function toggleColor(color) {
   return oppositeColor;
 }
 
+function getMovePossibilities(list) {
+  for (let i = 0; i < list.length; i++) {
+    let possibleCell = list[i];
+
+    const elementMove = document.createElement("div");
+    elementMove.classList.add("move");
+
+    possibleCell.appendChild(elementMove);
+  }
+}
+
 export {
   getPieceColor,
   getPieceType,
   getCoordinateLetter,
   getLetterCoordinate,
   toggleColor,
+  getMovePossibilities,
 };
