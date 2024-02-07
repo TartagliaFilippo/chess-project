@@ -8,10 +8,11 @@ import { pawnMove } from "./pawn-move.js";
 
 function whiteElementsOnBoard() {
   const listWhiteElements = [];
+  const color = "white";
   document.querySelectorAll(".cell").forEach(function (cell) {
     const listWhiteCell = [];
 
-    cell.classList.contains("white") ? listWhiteCell.push(cell) : "";
+    cell.classList.contains(color) ? listWhiteCell.push(cell) : "";
 
     for (let i = 0; i < listWhiteCell.length; i++) {
       const elementType = getPieceType(listWhiteCell[i].firstElementChild);
@@ -32,10 +33,11 @@ function whiteElementsOnBoard() {
 
 function blackElementsOnBoard() {
   const listBlackElements = [];
+  const color = "black";
   document.querySelectorAll(".cell").forEach(function (cell) {
     const listBlackCell = [];
 
-    cell.classList.contains("black") ? listBlackCell.push(cell) : "";
+    cell.classList.contains(color) ? listBlackCell.push(cell) : "";
 
     for (let i = 0; i < listBlackCell.length; i++) {
       const elementType = getPieceType(listBlackCell[i].firstElementChild);
@@ -95,17 +97,17 @@ function futureBlackMoves() {
     const elmentColumn = listElements[i].column;
 
     if (elementType === "king") {
-      listMoves = kingMoves(elementRow, elmentColumn, "white");
+      listMoves = kingMoves(elementRow, elmentColumn, "black");
     } else if (elementType === "queen") {
-      listMoves = queenMove(elementRow, elmentColumn, "white", 8);
+      listMoves = queenMove(elementRow, elmentColumn, "black", 8);
     } else if (elementType === "rook") {
-      listMoves = rookMove(elementRow, elmentColumn, "white", 8);
+      listMoves = rookMove(elementRow, elmentColumn, "black", 8);
     } else if (elementType === "bishop") {
-      listMoves = bishopMove(elementRow, elmentColumn, "white", 8);
+      listMoves = bishopMove(elementRow, elmentColumn, "black", 8);
     } else if (elementType === "knight") {
-      listMoves = knightMove(elementRow, elmentColumn, "white");
+      listMoves = knightMove(elementRow, elmentColumn, "black");
     } else if (elementType === "pawn") {
-      listMoves = pawnMove(elementRow, elmentColumn, "white");
+      listMoves = pawnMove(elementRow, elmentColumn, "black");
     }
 
     totalBlackMoves = [...totalBlackMoves, ...listMoves];

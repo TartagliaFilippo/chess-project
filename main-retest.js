@@ -38,9 +38,8 @@ const minCell = 1;
 
 document.querySelectorAll(".cell").forEach(function (cell) {
   cell.addEventListener("click", function (event) {
-    const listTotalMoves = futureWhiteMoves();
-
-    getMovePossibilities(listTotalMoves);
+    // const listTotalMoves = futureBlackMoves();
+    // getMovePossibilities(listTotalMoves);
 
     selectedCell = event.currentTarget;
 
