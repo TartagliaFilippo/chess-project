@@ -4,6 +4,7 @@ import {
   getCoordinateLetter,
   getLetterCoordinate,
   getMovePossibilities,
+  getKingPosition,
 } from "./get-functions.js";
 
 import { kingMoves } from "./king-move.js";
@@ -38,7 +39,11 @@ const minCell = 1;
 
 document.querySelectorAll(".cell").forEach(function (cell) {
   cell.addEventListener("click", function (event) {
-    // const listTotalMoves = futureBlackMoves();
+    listWhiteMoves = futureWhiteMoves();
+    listBlackMoves = futureBlackMoves();
+    let whiteKing = getKingPosition(whiteKingCell.row, whiteKingCell.column);
+    let blackKing = getKingPosition(blackKingCell.row, blackKingCell.column);
+    console.log(whiteKing, blackKing);
     // getMovePossibilities(listTotalMoves);
 
     selectedCell = event.currentTarget;

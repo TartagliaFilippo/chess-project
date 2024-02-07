@@ -81,6 +81,13 @@ function getMovePossibilities(list) {
   }
 }
 
+function getKingPosition(row, column) {
+  let kingPosition = document.querySelector(
+    `.cell[data-letter="${column}"][data-row="${row}"]`
+  );
+  return kingPosition;
+}
+
 export {
   getPieceColor,
   getPieceType,
@@ -88,4 +95,5 @@ export {
   getLetterCoordinate,
   toggleColor,
   getMovePossibilities,
+  getKingPosition,
 };
