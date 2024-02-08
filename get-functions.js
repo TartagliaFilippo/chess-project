@@ -85,6 +85,7 @@ function getKingPosition(row, column) {
   let kingPosition = document.querySelector(
     `.cell[data-letter="${column}"][data-row="${row}"]`
   );
+
   return kingPosition;
 }
 

@@ -15,6 +15,7 @@ import { knightMove } from "./knight-move.js";
 import { pawnMove } from "./pawn-move.js";
 import { movePiece } from "./move.js";
 import { futureWhiteMoves, futureBlackMoves } from "./piece-position.js";
+import { checkToTheKing } from "./check.js";
 
 let whiteKingCell = { row: 1, column: "e" };
 
@@ -39,12 +40,8 @@ const minCell = 1;
 
 document.querySelectorAll(".cell").forEach(function (cell) {
   cell.addEventListener("click", function (event) {
-    listWhiteMoves = futureWhiteMoves();
-    listBlackMoves = futureBlackMoves();
     let whiteKing = getKingPosition(whiteKingCell.row, whiteKingCell.column);
     let blackKing = getKingPosition(blackKingCell.row, blackKingCell.column);
-    console.log(whiteKing, blackKing);
-    // getMovePossibilities(listTotalMoves);
 
     selectedCell = event.currentTarget;
 
@@ -113,7 +110,6 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         whiteKingCell,
         blackKingCell
       );
-      console.log("king: ", whiteKingCell);
       piece.style.backgroundColor = "";
       startCell = null;
       destinationCell = null;
@@ -121,6 +117,20 @@ document.querySelectorAll(".cell").forEach(function (cell) {
       pieceType = null;
       pieceColor = null;
       listPossibleMove = [];
+      listWhiteMoves = futureWhiteMoves();
+      listBlackMoves = futureBlackMoves();
+
+      checkToWhiteKing = checkToTheKing(
+        listBlackMoves,
+        whiteKing,
+        checkToWhiteKing
+      );
+
+      checkToBlackKing = checkToTheKing(
+        listWhiteMoves,
+        blackKing,
+        checkToBlackKing
+      );
     }
   });
 });
