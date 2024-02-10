@@ -1,8 +1,19 @@
+import { longCastleMove, shortCastleMove } from "./castling.js";
 import { getCoordinateLetter, toggleColor } from "./get-functions.js";
 import { addPossibleMove } from "./move.js";
 import { futureMoves } from "./piece-position.js";
 
-function kingMoves(startRow, startColumn, color) {
+function kingMoves(
+  startRow,
+  startColumn,
+  color,
+  whiteKingIsMoved,
+  blackKingIsMoved,
+  whiteARookIsMoved,
+  blackARookIsMoved,
+  whiteHRookIsMoved,
+  blackHRookIsMoved
+) {
   let listPossibleMove = [];
   const oppositeColor = toggleColor(color);
   const startColumnNumber = getCoordinateLetter(startColumn);
@@ -64,6 +75,7 @@ function kingMoves(startRow, startColumn, color) {
   );
 
   const listOppositeMoves = futureMoves(oppositeColor);
+
   if (elementRight !== null && !elementRight.classList.contains(color)) {
     if (!listOppositeMoves.includes(elementRight)) {
       listPossibleMove.push(elementRight);
@@ -270,6 +282,28 @@ function kingMoves(startRow, startColumn, color) {
       }
     }
   }
+
+  let shortCastle = shortCastleMove(
+    color,
+    whiteKingIsMoved,
+    blackKingIsMoved,
+    whiteHRookIsMoved,
+    blackHRookIsMoved,
+    listOppositeMoves
+  );
+
+  listPossibleMove.push(shortCastle);
+
+  let longCastle = longCastleMove(
+    color,
+    whiteKingIsMoved,
+    blackKingIsMoved,
+    whiteARookIsMoved,
+    blackARookIsMoved,
+    listOppositeMoves
+  );
+
+  listPossibleMove.push(longCastle);
 
   return listPossibleMove;
 }

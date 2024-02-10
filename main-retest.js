@@ -26,6 +26,12 @@ let blackKingCell = {
 
 let checkToWhiteKing = false;
 let checkToBlackKing = false;
+let whiteKingIsMoved = false;
+let blackKingIsMoved = false;
+let whiteARookIsMoved = false;
+let blackARookIsMoved = false;
+let whiteHRookIsMoved = false;
+let blackHRookIsMoved = false;
 let selectedCell;
 let startCell;
 let destinationCell;
@@ -59,7 +65,17 @@ document.querySelectorAll(".cell").forEach(function (cell) {
       const startColumn = startCell.dataset.letter;
       console.log(startColumn, "-", startRow);
       if (pieceType === "king") {
-        listPossibleMove = kingMoves(startRow, startColumn, pieceColor);
+        listPossibleMove = kingMoves(
+          startRow,
+          startColumn,
+          pieceColor,
+          whiteKingIsMoved,
+          blackKingIsMoved,
+          whiteHRookIsMoved,
+          blackHRookIsMoved,
+          whiteARookIsMoved,
+          blackARookIsMoved
+        );
       } else if (pieceType === "queen") {
         listPossibleMove = queenMove(
           startRow,

@@ -8,12 +8,12 @@ function createAndPlacePiece(cell, pieceSrc, pieceId, color) {
 
 const piecesInfo = [
   //pezzi bianchi
-  // {
-  //   cell: "a1",
-  //   src: "./img/chess-pieces/white-rook.svg",
-  //   id: "white-rook-a",
-  //   color: "white",
-  // },
+  {
+    cell: "a1",
+    src: "./img/chess-pieces/white-rook.svg",
+    id: "white-rook-a",
+    color: "white",
+  },
   // {
   //   cell: "b1",
   //   src: "./img/chess-pieces/white-knight.svg",
@@ -26,12 +26,12 @@ const piecesInfo = [
   //   id: "white-bishop-c",
   //   color: "white",
   // },
-  {
-    cell: "d1",
-    src: "./img/chess-pieces/white-queen.svg",
-    id: "white-queen",
-    color: "white",
-  },
+  // {
+  //   cell: "d1",
+  //   src: "./img/chess-pieces/white-queen.svg",
+  //   id: "white-queen",
+  //   color: "white",
+  // },
   {
     cell: "e1",
     src: "./img/chess-pieces/white-king.svg",
@@ -50,12 +50,12 @@ const piecesInfo = [
   //   id: "white-knight-g",
   //   color: "white",
   // },
-  // {
-  //   cell: "h1",
-  //   src: "./img/chess-pieces/white-rook.svg",
-  //   id: "white-rook-h",
-  //   color: "white",
-  // },
+  {
+    cell: "h1",
+    src: "./img/chess-pieces/white-rook.svg",
+    id: "white-rook-h",
+    color: "white",
+  },
   //pedoni bianchi
   // {
   //   cell: "a2",
@@ -106,12 +106,12 @@ const piecesInfo = [
   //   color: "white",
   // },
   //pezzi neri
-  // {
-  //   cell: "a8",
-  //   src: "./img/chess-pieces/black-rook.svg",
-  //   id: "black-rook-a",
-  //   color: "black",
-  // },
+  {
+    cell: "a8",
+    src: "./img/chess-pieces/black-rook.svg",
+    id: "black-rook-a",
+    color: "black",
+  },
   // {
   //   cell: "b8",
   //   src: "./img/chess-pieces/black-knight.svg",
@@ -148,12 +148,12 @@ const piecesInfo = [
   //   id: "black-knight-g",
   //   color: "black",
   // },
-  // {
-  //   cell: "h8",
-  //   src: "./img/chess-pieces/black-rook.svg",
-  //   id: "black-rook-h",
-  //   color: "black",
-  // },
+  {
+    cell: "h8",
+    src: "./img/chess-pieces/black-rook.svg",
+    id: "black-rook-h",
+    color: "black",
+  },
   //pedoni neri
   // {
   //   cell: "a7",
