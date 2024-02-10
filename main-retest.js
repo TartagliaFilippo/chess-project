@@ -14,7 +14,7 @@ import { bishopMove } from "./bishop-move.js";
 import { knightMove } from "./knight-move.js";
 import { pawnMove } from "./pawn-move.js";
 import { movePiece } from "./move.js";
-import { futureWhiteMoves, futureBlackMoves } from "./piece-position.js";
+import { futureMoves, elementsOnBoard } from "./piece-position.js";
 import { checkToTheKing } from "./check.js";
 
 let whiteKingCell = { row: 1, column: "e" };
@@ -117,8 +117,6 @@ document.querySelectorAll(".cell").forEach(function (cell) {
       pieceType = null;
       pieceColor = null;
       listPossibleMove = [];
-      listWhiteMoves = futureWhiteMoves();
-      listBlackMoves = futureBlackMoves();
 
       checkToWhiteKing = checkToTheKing(
         listBlackMoves,

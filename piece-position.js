@@ -6,119 +6,57 @@ import { bishopMove } from "./bishop-move.js";
 import { kingMoves } from "./king-move.js";
 import { pawnMove } from "./pawn-move.js";
 
-function whiteElementsOnBoard() {
-  const listWhiteElements = [];
-  const color = "white";
+function elementsOnBoard(color) {
+  const listElements = [];
   document.querySelectorAll(".cell").forEach(function (cell) {
-    const listWhiteCell = [];
+    if (cell.classList.contains(color)) {
+      const elementType = getPieceType(cell.firstElementChild);
+      const elementRow = parseInt(cell.dataset.row);
+      const elementColumn = cell.dataset.letter;
 
-    cell.classList.contains(color) ? listWhiteCell.push(cell) : "";
-
-    for (let i = 0; i < listWhiteCell.length; i++) {
-      const elementType = getPieceType(listWhiteCell[i].firstElementChild);
-      const elementRow = listWhiteCell[i].dataset.row;
-      const elementColumn = listWhiteCell[i].dataset.letter;
-
-      const element = {
+      listElements.push({
         type: elementType,
         row: elementRow,
         column: elementColumn,
-      };
-
-      listWhiteElements.push(element);
+      });
     }
   });
-  return listWhiteElements;
+  return listElements;
 }
 
-function blackElementsOnBoard() {
-  const listBlackElements = [];
-  const color = "black";
-  document.querySelectorAll(".cell").forEach(function (cell) {
-    const listBlackCell = [];
+function futureMoves(color) {
+  const listElements = elementsOnBoard(color);
+  let totalMoves = [];
 
-    cell.classList.contains(color) ? listBlackCell.push(cell) : "";
+  listElements.forEach((element) => {
+    let listMoves = [];
 
-    for (let i = 0; i < listBlackCell.length; i++) {
-      const elementType = getPieceType(listBlackCell[i].firstElementChild);
-      const elementRow = listBlackCell[i].dataset.row;
-      const elementColumn = listBlackCell[i].dataset.letter;
-
-      const element = {
-        type: elementType,
-        row: elementRow,
-        column: elementColumn,
-      };
-
-      listBlackElements.push(element);
+    switch (element.type) {
+      case "king":
+        break;
+      case "queen":
+        listMoves = queenMove(element.row, element.column, color, 8);
+        break;
+      case "rook":
+        listMoves = rookMove(element.row, element.column, color, 8);
+        break;
+      case "bishop":
+        listMoves = bishopMove(element.row, element.column, color, 8);
+        break;
+      case "knight":
+        listMoves = knightMove(element.row, element.column, color);
+        break;
+      case "pawn":
+        listMoves = pawnMove(element.row, element.column, color);
+        break;
+      default:
+        break;
     }
+
+    totalMoves.push(...listMoves);
   });
-  return listBlackElements;
+
+  return totalMoves;
 }
 
-function futureWhiteMoves() {
-  const listElements = whiteElementsOnBoard();
-  let totalWhiteMoves = [];
-  let listMoves = [];
-
-  for (let i = 0; i < listElements.length; i++) {
-    const elementType = listElements[i].type;
-    const elementRow = parseInt(listElements[i].row);
-    const elmentColumn = listElements[i].column;
-
-    if (elementType === "king") {
-      listMoves = kingMoves(elementRow, elmentColumn, "white");
-    } else if (elementType === "queen") {
-      listMoves = queenMove(elementRow, elmentColumn, "white", 8);
-    } else if (elementType === "rook") {
-      listMoves = rookMove(elementRow, elmentColumn, "white", 8);
-    } else if (elementType === "bishop") {
-      listMoves = bishopMove(elementRow, elmentColumn, "white", 8);
-    } else if (elementType === "knight") {
-      listMoves = knightMove(elementRow, elmentColumn, "white");
-    } else if (elementType === "pawn") {
-      listMoves = pawnMove(elementRow, elmentColumn, "white");
-    }
-
-    totalWhiteMoves = [...totalWhiteMoves, ...listMoves];
-  }
-
-  return totalWhiteMoves;
-}
-
-function futureBlackMoves() {
-  const listElements = blackElementsOnBoard();
-  let totalBlackMoves = [];
-  let listMoves = [];
-
-  for (let i = 0; i < listElements.length; i++) {
-    const elementType = listElements[i].type;
-    const elementRow = parseInt(listElements[i].row);
-    const elmentColumn = listElements[i].column;
-
-    if (elementType === "king") {
-      listMoves = kingMoves(elementRow, elmentColumn, "black");
-    } else if (elementType === "queen") {
-      listMoves = queenMove(elementRow, elmentColumn, "black", 8);
-    } else if (elementType === "rook") {
-      listMoves = rookMove(elementRow, elmentColumn, "black", 8);
-    } else if (elementType === "bishop") {
-      listMoves = bishopMove(elementRow, elmentColumn, "black", 8);
-    } else if (elementType === "knight") {
-      listMoves = knightMove(elementRow, elmentColumn, "black");
-    } else if (elementType === "pawn") {
-      listMoves = pawnMove(elementRow, elmentColumn, "black");
-    }
-
-    totalBlackMoves = [...totalBlackMoves, ...listMoves];
-  }
-
-  return totalBlackMoves;
-}
-
-export {
-  whiteElementsOnBoard,
-  blackElementsOnBoard,
-  futureWhiteMoves,
-  futureBlackMoves,
-};
+export { elementsOnBoard, futureMoves };
