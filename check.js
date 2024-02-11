@@ -1,4 +1,8 @@
 function checkToTheKing(list, checkCell, boolean) {
+  if (!checkCell.firstChild) {
+    return boolean;
+  }
+
   if (list.includes(checkCell)) {
     boolean = true;
   } else {

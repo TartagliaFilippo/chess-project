@@ -292,7 +292,9 @@ function kingMoves(
     listOppositeMoves
   );
 
-  listPossibleMove.push(shortCastle);
+  if (shortCastle !== undefined) {
+    listPossibleMove.push(shortCastle);
+  }
 
   let longCastle = longCastleMove(
     color,
@@ -303,7 +305,9 @@ function kingMoves(
     listOppositeMoves
   );
 
-  listPossibleMove.push(longCastle);
+  if (longCastle !== undefined) {
+    listPossibleMove.push(longCastle);
+  }
 
   return listPossibleMove;
 }

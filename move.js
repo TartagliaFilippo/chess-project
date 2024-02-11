@@ -34,6 +34,10 @@ function movePiece(
     startCell.classList.remove(color);
     destinationCell.classList.add(color);
     destinationCell.appendChild(piece);
+
+    destinationShortCastle(piece, destinationCell, color);
+    destinationLongCastle(piece, destinationCell, color);
+
     if (piece.id === "white-king") {
       whiteKingCell.row = destinationCell.dataset.row;
       whiteKingCell.column = destinationCell.dataset.letter;
@@ -54,4 +58,102 @@ function addPossibleMove(row, column, color) {
   return element;
 }
 
-export { movePiece, addPossibleMove };
+function destinationShortCastle(piece, destinationCell, color) {
+  if (piece.id.includes("king")) {
+    if (color === "white") {
+      const destinationCastle = document.querySelector(
+        `.cell[data-letter="g"][data-row="1"]`
+      );
+      if (destinationCell === destinationCastle) {
+        const rookCell = document.querySelector(
+          `.cell[data-letter="h"][data-row="1"]`
+        );
+
+        if (rookCell.firstElementChild) {
+          const rookPice = rookCell.firstElementChild;
+          const destinationRook = document.querySelector(
+            `.cell[data-letter="f"][data-row="1"]`
+          );
+          rookCell.removeChild(rookPice);
+          rookCell.classList.remove(color);
+          destinationRook.classList.add(color);
+          destinationRook.appendChild(rookPice);
+        }
+      }
+    } else if (color === "black") {
+      const destinationCastle = document.querySelector(
+        `.cell[data-letter="g"][data-row="8"]`
+      );
+      if (destinationCell === destinationCastle) {
+        const rookCell = document.querySelector(
+          `.cell[data-letter="h"][data-row="8"]`
+        );
+
+        if (rookCell.firstElementChild) {
+          const rookPice = rookCell.firstElementChild;
+          const destinationRook = document.querySelector(
+            `.cell[data-letter="f"][data-row="8"]`
+          );
+          rookCell.removeChild(rookPice);
+          rookCell.classList.remove(color);
+          destinationRook.classList.add(color);
+          destinationRook.appendChild(rookPice);
+        }
+      }
+    }
+  }
+}
+
+function destinationLongCastle(piece, destinationCell, color) {
+  if (piece.id.includes("king")) {
+    if (color === "white") {
+      const destinationCastle = document.querySelector(
+        `.cell[data-letter="c"][data-row="1"]`
+      );
+      if (destinationCell === destinationCastle) {
+        const rookCell = document.querySelector(
+          `.cell[data-letter="a"][data-row="1"]`
+        );
+
+        if (rookCell.firstElementChild) {
+          const rookPice = rookCell.firstElementChild;
+          const destinationRook = document.querySelector(
+            `.cell[data-letter="d"][data-row="1"]`
+          );
+          rookCell.removeChild(rookPice);
+          rookCell.classList.remove(color);
+          destinationRook.classList.add(color);
+          destinationRook.appendChild(rookPice);
+        }
+      }
+    } else if (color === "black") {
+      const destinationCastle = document.querySelector(
+        `.cell[data-letter="c"][data-row="8"]`
+      );
+      if (destinationCell === destinationCastle) {
+        const rookCell = document.querySelector(
+          `.cell[data-letter="a"][data-row="8"]`
+        );
+
+        if (rookCell.firstElementChild) {
+          const rookPice = rookCell.firstElementChild;
+          const destinationRook = document.querySelector(
+            `.cell[data-letter="d"][data-row="8"]`
+          );
+          rookCell.removeChild(rookPice);
+          rookCell.classList.remove(color);
+          destinationRook.classList.add(color);
+          destinationRook.appendChild(rookPice);
+        }
+      }
+    }
+  }
+}
+
+function controlMove(startCell, destinationCell, boolean) {
+  if (startCell !== destinationCell) {
+    return (boolean = true);
+  }
+}
+
+export { movePiece, addPossibleMove, controlMove };

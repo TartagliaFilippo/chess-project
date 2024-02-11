@@ -28,6 +28,8 @@ function shortCastleMove(
           return shortCastle;
         }
       }
+    } else {
+      return;
     }
   } else if (color === "black") {
     if (blackKingIsMoved === false && blackHRookIsMoved === false) {
@@ -47,6 +49,8 @@ function shortCastleMove(
         }
       }
     }
+  } else {
+    return;
   }
 }
 

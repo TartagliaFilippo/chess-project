@@ -124,12 +124,12 @@ const piecesInfo = [
   //   id: "black-bishop-c",
   //   color: "black",
   // },
-  {
-    cell: "d8",
-    src: "./img/chess-pieces/black-queen.svg",
-    id: "black-queen",
-    color: "black",
-  },
+  // {
+  //   cell: "d8",
+  //   src: "./img/chess-pieces/black-queen.svg",
+  //   id: "black-queen",
+  //   color: "black",
+  // },
   {
     cell: "e8",
     src: "./img/chess-pieces/black-king.svg",

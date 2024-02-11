@@ -13,7 +13,7 @@ import { rookMove } from "./rook-move.js";
 import { bishopMove } from "./bishop-move.js";
 import { knightMove } from "./knight-move.js";
 import { pawnMove } from "./pawn-move.js";
-import { movePiece } from "./move.js";
+import { movePiece, controlMove } from "./move.js";
 import { futureMoves, elementsOnBoard } from "./piece-position.js";
 import { checkToTheKing } from "./check.js";
 
@@ -56,6 +56,7 @@ document.querySelectorAll(".cell").forEach(function (cell) {
     }
 
     if (!startCell) {
+      console.log("start: ", whiteHRookIsMoved);
       startCell = selectedCell;
       piece = startCell.firstElementChild;
       pieceType = getPieceType(piece);
@@ -71,10 +72,10 @@ document.querySelectorAll(".cell").forEach(function (cell) {
           pieceColor,
           whiteKingIsMoved,
           blackKingIsMoved,
-          whiteHRookIsMoved,
-          blackHRookIsMoved,
           whiteARookIsMoved,
-          blackARookIsMoved
+          blackARookIsMoved,
+          whiteHRookIsMoved,
+          blackHRookIsMoved
         );
       } else if (pieceType === "queen") {
         listPossibleMove = queenMove(
@@ -126,6 +127,47 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         whiteKingCell,
         blackKingCell
       );
+
+      if (piece.id === "white-king") {
+        whiteKingIsMoved = controlMove(
+          startCell,
+          destinationCell,
+          whiteKingIsMoved
+        );
+      } else if (piece.id === "black-king") {
+        blackKingIsMoved = controlMove(
+          startCell,
+          destinationCell,
+          blackKingIsMoved
+        );
+      } else if (piece.id === "white-rook-a") {
+        whiteARookIsMoved = controlMove(
+          startCell,
+          destinationCell,
+          whiteARookIsMoved
+        );
+      } else if (piece.id === "white-rook-h") {
+        whiteHRookIsMoved = controlMove(
+          startCell,
+          destinationCell,
+          whiteHRookIsMoved
+        );
+      } else if (piece.id === "black-rook-a") {
+        blackARookIsMoved = controlMove(
+          startCell,
+          destinationCell,
+          blackARookIsMoved
+        );
+      } else if (piece.id === "black-rook-h") {
+        blackHRookIsMoved = controlMove(
+          startCell,
+          destinationCell,
+          blackHRookIsMoved
+        );
+      }
+
+      console.log(whiteHRookIsMoved);
+
       piece.style.backgroundColor = "";
       startCell = null;
       destinationCell = null;
