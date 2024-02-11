@@ -1,14 +1,10 @@
 function checkToTheKing(list, checkCell, boolean) {
-  if (!checkCell.firstChild) {
-    return boolean;
-  }
+  list.includes(checkCell) ? (boolean = true) : (boolean = false);
 
-  if (list.includes(checkCell)) {
-    boolean = true;
-  } else {
-    boolean = false;
-  }
+  return boolean;
+}
 
+function getColorCheck(checkCell, boolean) {
   const cellElement = checkCell.firstChild;
 
   if (boolean === true) {
@@ -16,8 +12,6 @@ function checkToTheKing(list, checkCell, boolean) {
   } else if (boolean === false) {
     cellElement.style.backgroundColor = "";
   }
-
-  return boolean;
 }
 
-export { checkToTheKing };
+export { checkToTheKing, getColorCheck };

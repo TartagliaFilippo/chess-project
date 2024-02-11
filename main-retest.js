@@ -15,7 +15,7 @@ import { knightMove } from "./knight-move.js";
 import { pawnMove } from "./pawn-move.js";
 import { movePiece, controlMove } from "./move.js";
 import { futureMoves, elementsOnBoard } from "./piece-position.js";
-import { checkToTheKing } from "./check.js";
+import { checkToTheKing, getColorCheck } from "./check.js";
 
 let whiteKingCell = { row: 1, column: "e" };
 
@@ -46,9 +46,6 @@ const minCell = 1;
 
 document.querySelectorAll(".cell").forEach(function (cell) {
   cell.addEventListener("click", function (event) {
-    let whiteKing = getKingPosition(whiteKingCell.row, whiteKingCell.column);
-    let blackKing = getKingPosition(blackKingCell.row, blackKingCell.column);
-
     selectedCell = event.currentTarget;
 
     if (selectedCell.firstElementChild === null) {
@@ -56,7 +53,6 @@ document.querySelectorAll(".cell").forEach(function (cell) {
     }
 
     if (!startCell) {
-      console.log("start: ", whiteHRookIsMoved);
       startCell = selectedCell;
       piece = startCell.firstElementChild;
       pieceType = getPieceType(piece);
@@ -128,6 +124,9 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         blackKingCell
       );
 
+      let whiteKing = getKingPosition(whiteKingCell.row, whiteKingCell.column);
+      let blackKing = getKingPosition(blackKingCell.row, blackKingCell.column);
+
       if (piece.id === "white-king") {
         whiteKingIsMoved = controlMove(
           startCell,
@@ -166,8 +165,6 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         );
       }
 
-      console.log(whiteHRookIsMoved);
-
       piece.style.backgroundColor = "";
       startCell = null;
       destinationCell = null;
@@ -175,6 +172,9 @@ document.querySelectorAll(".cell").forEach(function (cell) {
       pieceType = null;
       pieceColor = null;
       listPossibleMove = [];
+
+      listWhiteMoves = futureMoves("white");
+      listBlackMoves = futureMoves("black");
 
       checkToWhiteKing = checkToTheKing(
         listBlackMoves,
@@ -187,6 +187,13 @@ document.querySelectorAll(".cell").forEach(function (cell) {
         blackKing,
         checkToBlackKing
       );
+
+      console.log("white: ", whiteKing);
+      console.log("black: ", blackKing);
+      console.log(checkToBlackKing);
+
+      getColorCheck(whiteKing, checkToWhiteKing);
+      getColorCheck(blackKing, checkToBlackKing);
     }
   });
 });
