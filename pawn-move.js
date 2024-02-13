@@ -1,12 +1,38 @@
+import { enPasantRight, enPasantLeft } from "./en-pasant.js";
 import { getCoordinateLetter, toggleColor } from "./get-functions.js";
 import { addPossibleMove } from "./move.js";
 
-function pawnMove(startRow, startColumn, color) {
+function pawnMove(startRow, startColumn, lastMove, color) {
   let listPossibleMove = [];
   const startColumnNumber = getCoordinateLetter(startColumn);
   const oppositeColor = toggleColor(color);
   const basicWhiteRow = 2;
   const basicBlackRow = 7;
+  if (lastMove !== undefined) {
+    if (lastMove.pieceName !== "") {
+      const specialRightMove = enPasantRight(
+        startRow,
+        startColumnNumber,
+        lastMove,
+        color
+      );
+
+      const specialLeftMove = enPasantLeft(
+        startRow,
+        startColumnNumber,
+        lastMove,
+        color
+      );
+
+      if (lastMove.pieceName.includes("pawn")) {
+        if (specialRightMove !== undefined) {
+          listPossibleMove.push(specialRightMove);
+        } else if (specialLeftMove !== undefined) {
+          listPossibleMove.push(specialLeftMove);
+        }
+      }
+    }
+  }
 
   if (color === "white") {
     if (startRow >= basicWhiteRow) {

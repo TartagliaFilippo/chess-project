@@ -81,30 +81,30 @@ const piecesInfo = [
   //   id: "white-pawn-d",
   //   color: "white",
   // },
-  // {
-  //   cell: "e2",
-  //   src: "./img/chess-pieces/white-pawn.svg",
-  //   id: "white-pawn-e",
-  //   color: "white",
-  // },
-  // {
-  //   cell: "f2",
-  //   src: "./img/chess-pieces/white-pawn.svg",
-  //   id: "white-pawn-f",
-  //   color: "white",
-  // },
-  // {
-  //   cell: "g2",
-  //   src: "./img/chess-pieces/white-pawn.svg",
-  //   id: "white-pawn-g",
-  //   color: "white",
-  // },
-  // {
-  //   cell: "h2",
-  //   src: "./img/chess-pieces/white-pawn.svg",
-  //   id: "white-pawn-h",
-  //   color: "white",
-  // },
+  {
+    cell: "e2",
+    src: "./img/chess-pieces/white-pawn.svg",
+    id: "white-pawn-e",
+    color: "white",
+  },
+  {
+    cell: "f2",
+    src: "./img/chess-pieces/white-pawn.svg",
+    id: "white-pawn-f",
+    color: "white",
+  },
+  {
+    cell: "g2",
+    src: "./img/chess-pieces/white-pawn.svg",
+    id: "white-pawn-g",
+    color: "white",
+  },
+  {
+    cell: "h2",
+    src: "./img/chess-pieces/white-pawn.svg",
+    id: "white-pawn-h",
+    color: "white",
+  },
   //pezzi neri
   {
     cell: "a8",
@@ -179,30 +179,30 @@ const piecesInfo = [
   //   id: "black-pawn-d",
   //   color: "black",
   // },
-  // {
-  //   cell: "e7",
-  //   src: "./img/chess-pieces/black-pawn.svg",
-  //   id: "black-pawn-e",
-  //   color: "black",
-  // },
-  // {
-  //   cell: "f7",
-  //   src: "./img/chess-pieces/black-pawn.svg",
-  //   id: "black-pawn-f",
-  //   color: "black",
-  // },
-  // {
-  //   cell: "g7",
-  //   src: "./img/chess-pieces/black-pawn.svg",
-  //   id: "black-pawn-g",
-  //   color: "black",
-  // },
-  // {
-  //   cell: "h7",
-  //   src: "./img/chess-pieces/black-pawn.svg",
-  //   id: "black-pawn-h",
-  //   color: "black",
-  // },
+  {
+    cell: "e7",
+    src: "./img/chess-pieces/black-pawn.svg",
+    id: "black-pawn-e",
+    color: "black",
+  },
+  {
+    cell: "f7",
+    src: "./img/chess-pieces/black-pawn.svg",
+    id: "black-pawn-f",
+    color: "black",
+  },
+  {
+    cell: "g7",
+    src: "./img/chess-pieces/black-pawn.svg",
+    id: "black-pawn-g",
+    color: "black",
+  },
+  {
+    cell: "h7",
+    src: "./img/chess-pieces/black-pawn.svg",
+    id: "black-pawn-h",
+    color: "black",
+  },
 ];
 
 // Ciclo per creare e posizionare tutti i pezzi

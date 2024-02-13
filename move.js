@@ -2,6 +2,7 @@ import {
   toggleColor,
   getPieceColor,
   getLetterCoordinate,
+  getCoordinateLetter,
 } from "./get-functions.js";
 
 function movePiece(
@@ -13,6 +14,7 @@ function movePiece(
   whiteKingCell,
   blackKingCell
 ) {
+  const startRow = startCell.dataset.row;
   const hasPiece = destinationCell.firstElementChild;
   const oppositeColor = toggleColor(color);
 
@@ -34,6 +36,11 @@ function movePiece(
     startCell.classList.remove(color);
     destinationCell.classList.add(color);
     destinationCell.appendChild(piece);
+
+    if (piece.id.includes("pawn")) {
+      destinationEnPasantRight(piece, startCell, destinationCell, color);
+      destinationEnPasantLeft(piece, startCell, destinationCell, color);
+    }
 
     destinationShortCastle(piece, destinationCell, color);
     destinationLongCastle(piece, destinationCell, color);
@@ -156,4 +163,122 @@ function controlMove(startCell, destinationCell, boolean) {
   }
 }
 
-export { movePiece, addPossibleMove, controlMove };
+function getLastMove(piece, startCell, destinationCell, lastMove) {
+  const startRow = startCell.dataset.row;
+  const startColumn = startCell.dataset.letter;
+
+  const destinationRow = destinationCell.dataset.row;
+  const destinationColumn = destinationCell.dataset.letter;
+
+  lastMove.pieceName = piece.id;
+  lastMove.startCell = startCell;
+  lastMove.destinationCell = destinationCell;
+  lastMove.startRow = startRow;
+  lastMove.destinationRow = destinationRow;
+  lastMove.startColumn = startColumn;
+  lastMove.destinationColumn = destinationColumn;
+}
+
+function destinationEnPasantRight(piece, startCell, destinationCell, color) {
+  const startRow = parseInt(startCell.dataset.row);
+  const startColumn = startCell.dataset.letter;
+  const startColumnNumber = getCoordinateLetter(startColumn);
+  const oppositeColor = toggleColor(color);
+
+  if (piece.id.includes("pawn")) {
+    if (color === "white") {
+      const destinationEnPasant = document.querySelector(
+        `.cell[data-letter="${getLetterCoordinate(
+          startColumnNumber + 1
+        )}"][data-row="${startRow + 1}"]`
+      );
+
+      if (destinationCell === destinationEnPasant) {
+        const oppositePawn = document.querySelector(
+          `.cell[data-letter="${getLetterCoordinate(
+            startColumnNumber + 1
+          )}"][data-row="${startRow}"]`
+        );
+
+        if (oppositePawn.firstElementChild) {
+          const oppositeElement = oppositePawn.firstElementChild;
+          oppositePawn.removeChild(oppositeElement);
+          oppositePawn.classList.remove(oppositeColor);
+        }
+      }
+    } else if (color === "black") {
+      const destinationEnPasant = document.querySelector(
+        `.cell[data-letter="${getLetterCoordinate(
+          startColumnNumber + 1
+        )}"][data-row="${startRow - 1}"]`
+      );
+
+      if (destinationCell === destinationEnPasant) {
+        const oppositePawn = document.querySelector(
+          `.cell[data-letter="${getLetterCoordinate(
+            startColumnNumber + 1
+          )}"][data-row="${startRow}"]`
+        );
+
+        if (oppositePawn.firstElementChild) {
+          const oppositeElement = oppositePawn.firstElementChild;
+          oppositePawn.removeChild(oppositeElement);
+          oppositePawn.classList.remove(oppositeColor);
+        }
+      }
+    }
+  }
+}
+
+function destinationEnPasantLeft(piece, startCell, destinationCell, color) {
+  const startRow = parseInt(startCell.dataset.row);
+  const startColumn = startCell.dataset.letter;
+  const startColumnNumber = getCoordinateLetter(startColumn);
+  const oppositeColor = toggleColor(color);
+
+  if (piece.id.includes("pawn")) {
+    if (color === "white") {
+      const destinationEnPasant = document.querySelector(
+        `.cell[data-letter="${getLetterCoordinate(
+          startColumnNumber - 1
+        )}"][data-row="${startRow + 1}"]`
+      );
+
+      if (destinationCell === destinationEnPasant) {
+        const oppositePawn = document.querySelector(
+          `.cell[data-letter="${getLetterCoordinate(
+            startColumnNumber - 1
+          )}"][data-row="${startRow}"]`
+        );
+
+        if (oppositePawn.firstElementChild) {
+          const oppositeElement = oppositePawn.firstElementChild;
+          oppositePawn.removeChild(oppositeElement);
+          oppositePawn.classList.remove(oppositeColor);
+        }
+      }
+    } else if (color === "black") {
+      const destinationEnPasant = document.querySelector(
+        `.cell[data-letter="${getLetterCoordinate(
+          startColumnNumber - 1
+        )}"][data-row="${startRow - 1}"]`
+      );
+
+      if (destinationCell === destinationEnPasant) {
+        const oppositePawn = document.querySelector(
+          `.cell[data-letter="${getLetterCoordinate(
+            startColumnNumber - 1
+          )}"][data-row="${startRow}"]`
+        );
+
+        if (oppositePawn.firstElementChild) {
+          const oppositeElement = oppositePawn.firstElementChild;
+          oppositePawn.removeChild(oppositeElement);
+          oppositePawn.classList.remove(oppositeColor);
+        }
+      }
+    }
+  }
+}
+
+export { movePiece, addPossibleMove, controlMove, getLastMove };

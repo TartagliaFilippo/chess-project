@@ -24,7 +24,7 @@ function elementsOnBoard(color) {
   return listElements;
 }
 
-function futureMoves(color) {
+function futureMoves(color, lastMove) {
   const listElements = elementsOnBoard(color);
   let totalMoves = [];
 
@@ -47,7 +47,7 @@ function futureMoves(color) {
         listMoves = knightMove(element.row, element.column, color);
         break;
       case "pawn":
-        listMoves = pawnMove(element.row, element.column, color);
+        listMoves = pawnMove(element.row, element.column, lastMove, color);
         break;
       default:
         break;
