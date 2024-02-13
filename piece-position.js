@@ -3,7 +3,6 @@ import { queenMove } from "./queen-move.js";
 import { rookMove } from "./rook-move.js";
 import { knightMove } from "./knight-move.js";
 import { bishopMove } from "./bishop-move.js";
-import { kingMoves } from "./king-move.js";
 import { pawnMove } from "./pawn-move.js";
 
 function elementsOnBoard(color) {

@@ -89,6 +89,14 @@ function getKingPosition(row, column) {
   return kingPosition;
 }
 
+function getCurrentTurn(currentTurn) {
+  currentTurn = currentTurn === "white" ? "black" : "white";
+
+  document.getElementById("turn").innerHTML = currentTurn;
+
+  return currentTurn;
+}
+
 export {
   getPieceColor,
   getPieceType,
@@ -97,4 +105,5 @@ export {
   toggleColor,
   getMovePossibilities,
   getKingPosition,
+  getCurrentTurn,
 };
