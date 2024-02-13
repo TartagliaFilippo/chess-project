@@ -5,6 +5,7 @@ import {
   getCoordinateLetter,
 } from "./get-functions.js";
 
+//movimento generale / cattura dei pezzi
 function movePiece(
   piece,
   startCell,
@@ -12,7 +13,8 @@ function movePiece(
   color,
   listPossibleMove,
   whiteKingCell,
-  blackKingCell
+  blackKingCell,
+  lastMove
 ) {
   const startRow = startCell.dataset.row;
   const hasPiece = destinationCell.firstElementChild;
@@ -57,6 +59,7 @@ function movePiece(
   }
 }
 
+//individuazione della cella inserendo le coordinate
 function addPossibleMove(row, column, color) {
   const element = document.querySelector(
     `.cell[data-letter="${getLetterCoordinate(column)}"][data-row="${row}"]`
@@ -65,6 +68,34 @@ function addPossibleMove(row, column, color) {
   return element;
 }
 
+//controllo del movimento dei pezzi per l'arrocco
+function controlMove(startCell, destinationCell, boolean) {
+  if (startCell !== destinationCell) {
+    return (boolean = true);
+  }
+}
+
+//individuazione dell'ultimo pezzo mosso
+function getLastMove(piece, startCell, destinationCell, lastMove) {
+  const startRow = startCell.dataset.row;
+  const startColumn = startCell.dataset.letter;
+
+  const destinationRow = destinationCell.dataset.row;
+  const destinationColumn = destinationCell.dataset.letter;
+
+  const color = getPieceColor(piece);
+
+  lastMove.pieceName = piece.id;
+  lastMove.pieceColor = color;
+  lastMove.startCell = startCell;
+  lastMove.destinationCell = destinationCell;
+  lastMove.startRow = startRow;
+  lastMove.destinationRow = destinationRow;
+  lastMove.startColumn = startColumn;
+  lastMove.destinationColumn = destinationColumn;
+}
+
+//destinazione arrocco corto
 function destinationShortCastle(piece, destinationCell, color) {
   if (piece.id.includes("king")) {
     if (color === "white") {
@@ -111,6 +142,7 @@ function destinationShortCastle(piece, destinationCell, color) {
   }
 }
 
+//destinazione arrocco lungo
 function destinationLongCastle(piece, destinationCell, color) {
   if (piece.id.includes("king")) {
     if (color === "white") {
@@ -157,28 +189,7 @@ function destinationLongCastle(piece, destinationCell, color) {
   }
 }
 
-function controlMove(startCell, destinationCell, boolean) {
-  if (startCell !== destinationCell) {
-    return (boolean = true);
-  }
-}
-
-function getLastMove(piece, startCell, destinationCell, lastMove) {
-  const startRow = startCell.dataset.row;
-  const startColumn = startCell.dataset.letter;
-
-  const destinationRow = destinationCell.dataset.row;
-  const destinationColumn = destinationCell.dataset.letter;
-
-  lastMove.pieceName = piece.id;
-  lastMove.startCell = startCell;
-  lastMove.destinationCell = destinationCell;
-  lastMove.startRow = startRow;
-  lastMove.destinationRow = destinationRow;
-  lastMove.startColumn = startColumn;
-  lastMove.destinationColumn = destinationColumn;
-}
-
+//destinazione dell'En Pasant a destra
 function destinationEnPasantRight(piece, startCell, destinationCell, color) {
   const startRow = parseInt(startCell.dataset.row);
   const startColumn = startCell.dataset.letter;
@@ -200,10 +211,14 @@ function destinationEnPasantRight(piece, startCell, destinationCell, color) {
           )}"][data-row="${startRow}"]`
         );
 
-        if (oppositePawn.firstElementChild) {
-          const oppositeElement = oppositePawn.firstElementChild;
-          oppositePawn.removeChild(oppositeElement);
-          oppositePawn.classList.remove(oppositeColor);
+        if (oppositePawn.classList.contains(oppositeColor)) {
+          if (oppositePawn.firstElementChild) {
+            const oppositeElement = oppositePawn.firstElementChild;
+            if (oppositeElement.id.includes(oppositeColor)) {
+              oppositePawn.removeChild(oppositeElement);
+              oppositePawn.classList.remove(oppositeColor);
+            }
+          }
         }
       }
     } else if (color === "black") {
@@ -220,16 +235,21 @@ function destinationEnPasantRight(piece, startCell, destinationCell, color) {
           )}"][data-row="${startRow}"]`
         );
 
-        if (oppositePawn.firstElementChild) {
-          const oppositeElement = oppositePawn.firstElementChild;
-          oppositePawn.removeChild(oppositeElement);
-          oppositePawn.classList.remove(oppositeColor);
+        if (oppositePawn.classList.contains(oppositeColor)) {
+          if (oppositePawn.firstElementChild) {
+            const oppositeElement = oppositePawn.firstElementChild;
+            if (oppositeElement.id.includes(oppositeColor)) {
+              oppositePawn.removeChild(oppositeElement);
+              oppositePawn.classList.remove(oppositeColor);
+            }
+          }
         }
       }
     }
   }
 }
 
+//destinazione dell'En Pasant a sinistra
 function destinationEnPasantLeft(piece, startCell, destinationCell, color) {
   const startRow = parseInt(startCell.dataset.row);
   const startColumn = startCell.dataset.letter;
@@ -251,10 +271,14 @@ function destinationEnPasantLeft(piece, startCell, destinationCell, color) {
           )}"][data-row="${startRow}"]`
         );
 
-        if (oppositePawn.firstElementChild) {
-          const oppositeElement = oppositePawn.firstElementChild;
-          oppositePawn.removeChild(oppositeElement);
-          oppositePawn.classList.remove(oppositeColor);
+        if (oppositePawn.classList.contains(oppositeColor)) {
+          if (oppositePawn.firstElementChild) {
+            const oppositeElement = oppositePawn.firstElementChild;
+            if (oppositeElement.id.includes(oppositeColor)) {
+              oppositePawn.removeChild(oppositeElement);
+              oppositePawn.classList.remove(oppositeColor);
+            }
+          }
         }
       }
     } else if (color === "black") {
@@ -271,10 +295,14 @@ function destinationEnPasantLeft(piece, startCell, destinationCell, color) {
           )}"][data-row="${startRow}"]`
         );
 
-        if (oppositePawn.firstElementChild) {
-          const oppositeElement = oppositePawn.firstElementChild;
-          oppositePawn.removeChild(oppositeElement);
-          oppositePawn.classList.remove(oppositeColor);
+        if (oppositePawn.classList.contains(oppositeColor)) {
+          if (oppositePawn.firstElementChild) {
+            const oppositeElement = oppositePawn.firstElementChild;
+            if (oppositeElement.id.includes(oppositeColor)) {
+              oppositePawn.removeChild(oppositeElement);
+              oppositePawn.classList.remove(oppositeColor);
+            }
+          }
         }
       }
     }
